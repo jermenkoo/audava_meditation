@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home_id"
+            android:icon="@drawable/ic_home_black_48dp"
+            android:title="Home"></item>
+
+        <item android:title="Meditation Category">
+            <menu>
+                <item
+                    android:id="@+id/relationships_id"
+                    android:icon="@drawable/ic_heart_black_48dp"
+                    android:title="Relationships"></item>
+                <item
+                    android:id="@+id/work_id"
+                    android:icon="@drawable/ic_work_black_48dp"
+                    android:title="Work"></item>
+            </menu>
+        </item>
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_settings_black_48dp"
+                android:title="Settings"></item>
+        </menu>
+    </item>
+
+</menu>
