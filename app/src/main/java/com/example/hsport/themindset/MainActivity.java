@@ -1,5 +1,6 @@
 package com.example.hsport.themindset;
 
+import android.media.MediaPlayer;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
+    MediaPlayer currentMeditation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_closed);
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        //For the media player capabilities
+        /*
+        MediaPlayer ourIntervention = MediaPlayer.create(this, R.raw.ocd);
+        ourIntervention.start();
+        */
+
     }
 
     @Override
