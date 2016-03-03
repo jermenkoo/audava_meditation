@@ -16,8 +16,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#f9eaff">
+        android:background="#f9eaff"
+        android:orientation="vertical">
 
         <include
             layout="@layout/toolbar_layout"
@@ -34,12 +34,12 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center_horizontal"
                 android:text="00:00"
-                android:id="@+id/txt_time"
-                android:layout_gravity="center_horizontal" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <SeekBar
                 android:id="@+id/seekBar"
@@ -63,6 +63,14 @@
                     android:cropToPadding="false"
                     android:src="@drawable/btn_play" />
 
+                <ImageButton
+                    android:id="@+id/btn_pause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="false"
+                    android:background="@null"
+                    android:cropToPadding="false"
+                    android:src="@drawable/btn_pause" />
 
                 <ImageButton
                     android:id="@+id/btn_stop"
