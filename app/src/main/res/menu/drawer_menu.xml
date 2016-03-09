@@ -3,31 +3,51 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/home_id"
+            android:id="@+id/menu_home"
             android:icon="@drawable/ic_home_black_48dp"
-            android:title="Home"></item>
+            android:title="@string/str_home"></item>
 
-        <item android:title="Meditation Category">
+        <item android:title="@string/str_find_interventions">
             <menu>
                 <item
-                    android:id="@+id/relationships_id"
-                    android:icon="@drawable/ic_heart_black_48dp"
-                    android:title="Relationships"></item>
+                    android:id="@+id/menu_browse_all"
+                    android:icon="@android:drawable/ic_search_category_default"
+                    android:title="@string/str_browse_all"></item>
+
                 <item
-                    android:id="@+id/work_id"
+                    android:id="@+id/menu_relationships"
+                    android:icon="@drawable/ic_heart_black_48dp"
+                    android:title="@string/str_relationships"></item>
+                <item
+                    android:id="@+id/menu_work"
                     android:icon="@drawable/ic_work_black_48dp"
-                    android:title="Work"></item>
+                    android:title="@string/str_work"></item>
+                <item
+                    android:id="@+id/menu_goals"
+                    android:icon="@android:drawable/btn_star"
+                    android:title="@string/str_goal"></item>
+
+
             </menu>
         </item>
     </group>
+    <group android:checkableBehavior="single">
 
-    <item android:title="Settings">
-        <menu>
+        <item android:title="@string/str_settings">
+            <menu>
+                <item
+                    android:id="@+id/menu_settings"
+                    android:icon="@drawable/ic_settings_black_48dp"
+                    android:title="@string/str_settings_general"></item>
+            </menu>
+        </item>
+
             <item
-                android:id="@+id/settings"
+                android:id="@+id/menu_about"
                 android:icon="@drawable/ic_settings_black_48dp"
-                android:title="Settings"></item>
-        </menu>
-    </item>
+                android:title="@string/str_about"></item>
+
+    </group>
+
 
 </menu>

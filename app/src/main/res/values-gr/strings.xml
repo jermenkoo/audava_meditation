@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">The Mindset</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_closed">drawer closed</string>
+    <string name="str_home">Σπίτι</string>
+    <string name="str_find_interventions">Βρές παρέμβαση</string>
+    <string name="str_browse_all">Περιήγηση σε όλα…</string>
+    <string name="str_relationships">Σχέσεις</string>
+    <string name="str_work">Δουλειά</string>
+    <string name="str_settings">Ρυθμίσεις</string>
+    <string name="str_settings_general">Γενικές</string>
+</resources>
