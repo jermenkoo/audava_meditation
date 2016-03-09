@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     tools:context="com.example.hsport.themindset.MainActivity">
 
@@ -13,10 +12,10 @@
     <!--second child is the contents of the menu-->
 
     <!--First child layout-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f9eaff"
         android:orientation="vertical">
 
         <include
@@ -30,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
+            android:gravity="bottom"
             android:orientation="vertical">
 
             <TextView
@@ -45,44 +44,103 @@
                 android:id="@+id/seekBar"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btn_rew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="false"
+                    android:background="@null"
+                    android:cropToPadding="false"
+                    android:padding="30dp"
+                    android:rotationY="180"
+                    android:rotation="180"
+                    android:src="@android:drawable/ic_media_rew" />
 
                 <ImageButton
                     android:id="@+id/btn_play_pause"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="false"
                     android:background="@null"
                     android:cropToPadding="false"
-                    android:src="@drawable/btn_play" />
+                    android:padding="30dp"
+                    android:src="@android:drawable/ic_media_play" />
 
                 <ImageButton
-                    android:id="@+id/btn_pause"
+                    android:id="@+id/btn_ff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="false"
                     android:background="@null"
                     android:cropToPadding="false"
-                    android:src="@drawable/btn_pause" />
+                    android:padding="30dp"
+                    android:src="@android:drawable/ic_media_ff" />
 
-                <ImageButton
-                    android:id="@+id/btn_stop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="false"
-                    android:background="@null"
-                    android:cropToPadding="false"
-                    android:src="@drawable/btn_stop" />
 
             </LinearLayout>
+            <!--<ImageButton-->
+            <!--android:id="@+id/btn_pause"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:adjustViewBounds="false"-->
+            <!--android:background="@null"-->
+            <!--android:cropToPadding="false"-->
+            <!--android:src="@android:drawable/ic_media_pause" />-->
 
+            <!--<ImageButton-->
+            <!--android:id="@+id/btn_stop"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:adjustViewBounds="false"-->
+            <!--android:background="@null"-->
+            <!--android:cropToPadding="false"-->
+            <!--android:src="@android:drawable/ic_media_pause" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Current intervention loaded: " />
+
+                <TextView
+                    android:id="@+id/txt_current_intervention"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="No intervention loaded" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Duration: " />
+
+                <TextView
+                    android:id="@+id/txt_current_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="0:0" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -96,7 +154,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_drawer_header"
         app:menu="@menu/drawer_menu">
-
 
     </android.support.design.widget.NavigationView>
 
