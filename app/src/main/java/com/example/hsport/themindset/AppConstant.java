@@ -2,7 +2,7 @@ package com.example.hsport.themindset;
 /*
  * Created by lambros on 08/03/16.
  *
- * Class to store constants
+ * Just a class to store constants
  *
  */
 

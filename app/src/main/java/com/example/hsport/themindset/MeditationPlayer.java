@@ -1,23 +1,15 @@
 package com.example.hsport.themindset;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Lambros on 04/03/16.
@@ -55,12 +47,6 @@ public class MeditationPlayer extends AppCompatActivity {
         final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
         final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
 
-//        final ImageButton stopButton = (ImageButton) findViewById(R.id.btn_stop);
-//        final ImageButton pauseButton = (ImageButton) findViewById(R.id.btn_pause);
-
-        //Initial settings for some UI elements
-//        stopButton.setImageResource(R.drawable.btn_stop_disabled);
-//        pauseButton.setImageResource(R.drawable.btn_pause_disabled);
         seekBar.setMax(mediaPlayer.getDuration());
         seekBar.setEnabled(false);
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
@@ -84,14 +70,10 @@ public class MeditationPlayer extends AppCompatActivity {
                     seekBar.setEnabled(true);
                     mediaPlayer.start();
                     playButton.setImageResource(android.R.drawable.ic_media_pause);
-//                    pauseButton.setImageResource(R.drawable.btn_pause);
-//                    stopButton.setImageResource(R.drawable.btn_stop);
                     myHandler.postDelayed(UpdateSongTime, 100);
                 } else if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                     playButton.setImageResource(android.R.drawable.ic_media_play);
-//                    playButton.setImageResource(R.drawable.btn_play);
-//                    stopButton.setImageResource(R.drawable.btn_stop);
                 }
             }
         });
@@ -120,35 +102,6 @@ public class MeditationPlayer extends AppCompatActivity {
             }
         });
 
-/*
-        //PAUSE button
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
-                    pauseButton.setImageResource(R.drawable.btn_pause_disabled);
-                    playButton.setImageResource(R.drawable.btn_play);
-                    stopButton.setImageResource(R.drawable.btn_stop);
-                }
-            }
-        });
-*/
-/*
-        //STOP button
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer.pause();
-                mediaPlayer.seekTo(0);
-                seekBar.setEnabled(false);
-                playButton.setImageResource(R.drawable.btn_play);
-                pauseButton.setImageResource(R.drawable.btn_pause_disabled);
-                stopButton.setImageResource(R.drawable.btn_stop_disabled);
-                myHandler.postDelayed(UpdateSongTime, 100);
-            }
-        });*/
-
         //Track seekBar changes
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -171,13 +124,10 @@ public class MeditationPlayer extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
         actionBarDrawerToggle.syncState();
     }
-
-
 }
