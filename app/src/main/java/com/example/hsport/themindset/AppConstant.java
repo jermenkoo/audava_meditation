@@ -6,6 +6,10 @@ package com.example.hsport.themindset;
  *
  */
 
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+
 public class AppConstant {
     public static final String PERSONAL_NOTES_PREFERENCE = "personal_notes_selection";
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
@@ -14,5 +18,9 @@ public class AppConstant {
     public static final String MEDITATE = "Audava Meditation";
 
     public static final int SKIP_AMOUNT = 15000; //in milliseconds
+
+    public static final DrawerLayout drawerLayout = null;
+    public static final ActionBarDrawerToggle actionBarDrawerToggle = null;
+    public static final Toolbar toolbar = null;
 
 }

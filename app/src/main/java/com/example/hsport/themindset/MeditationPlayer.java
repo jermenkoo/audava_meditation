@@ -2,14 +2,17 @@ package com.example.hsport.themindset;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Lambros on 04/03/16.
@@ -27,6 +30,10 @@ public class MeditationPlayer extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,6 +58,19 @@ public class MeditationPlayer extends AppCompatActivity {
         seekBar.setEnabled(false);
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_relationships:
+                        MenuItem thisItem = item;
+                        txtCurrentIntervention.setText("Finally!");
+                        drawerLayout.closeDrawers();
+                }
+                return false;
+            }
+        });
 
         final Runnable UpdateSongTime = new Runnable() {
             public void run() {
@@ -104,7 +124,6 @@ public class MeditationPlayer extends AppCompatActivity {
 
         //Track seekBar changes
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //Add functionality to move the media player to the
@@ -114,12 +133,12 @@ public class MeditationPlayer extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                return;
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                return;
             }
         });
     }
@@ -130,4 +149,5 @@ public class MeditationPlayer extends AppCompatActivity {
 
         actionBarDrawerToggle.syncState();
     }
+
 }
