@@ -1,6 +1,11 @@
-package com.example.hsport.themindset;
+package com.lambroszannettos.themindmanifesto;
 
 import android.app.Application;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,4 +29,6 @@ public final class MyFunctions extends Application {
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
                                 toMinutes((long) milliseconds)));
     }
+
+
 }

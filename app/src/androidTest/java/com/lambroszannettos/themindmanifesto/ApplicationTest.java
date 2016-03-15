@@ -1,4 +1,4 @@
-package com.example.hsport.themindset;
+package com.lambroszannettos.themindmanifesto;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

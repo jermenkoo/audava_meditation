@@ -1,4 +1,4 @@
-package com.example.hsport.themindset;
+package com.lambroszannettos.themindmanifesto;
 
 import android.content.Intent;
 import android.os.Bundle;
