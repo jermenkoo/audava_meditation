@@ -1,4 +1,4 @@
-package com.example.hsport.themindset;
+package com.lambroszannettos.themindmanifesto;
 /*
  * Created by lambros on 08/03/16.
  *

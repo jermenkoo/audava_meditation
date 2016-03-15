@@ -1,4 +1,4 @@
-package com.example.hsport.themindset;
+package com.lambroszannettos.themindmanifesto;
 
 import org.junit.Test;
 

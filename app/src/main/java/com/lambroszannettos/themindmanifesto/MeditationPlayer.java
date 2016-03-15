@@ -1,4 +1,4 @@
-package com.example.hsport.themindset;
+package com.lambroszannettos.themindmanifesto;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,34 +12,30 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Lambros on 04/03/16.
  */
-public class MeditationPlayer extends AppCompatActivity {
+public class MeditationPlayer extends BaseActivity {
 
     public android.os.Handler myHandler = new android.os.Handler();
 
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle actionBarDrawerToggle;
-    Toolbar toolbar;
+//    DrawerLayout drawerLayout;
+//    ActionBarDrawerToggle actionBarDrawerToggle;
+//    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-
-
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+//
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
+//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         //Find all the UI elements and assign variables to them
         final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
@@ -59,18 +55,18 @@ public class MeditationPlayer extends AppCompatActivity {
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_relationships:
-                        MenuItem thisItem = item;
-                        txtCurrentIntervention.setText("Finally!");
-                        drawerLayout.closeDrawers();
-                }
-                return false;
-            }
-        });
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.menu_relationships:
+//                        MenuItem thisItem = item;
+//                        txtCurrentIntervention.setText("Finally!");
+//                        drawerLayout.closeDrawers();
+//                }
+//                return false;
+//            }
+//        });
 
         final Runnable UpdateSongTime = new Runnable() {
             public void run() {
@@ -143,11 +139,11 @@ public class MeditationPlayer extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        actionBarDrawerToggle.syncState();
-    }
+//    @Override
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+//
+//        actionBarDrawerToggle.syncState();
+//    }
 
 }
