@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 public class MeditationPlayer extends BaseActivity {
 
     public android.os.Handler myHandler = new android.os.Handler();
+    boolean isSeekBarTracking = false;
 
 //    DrawerLayout drawerLayout;
 //    ActionBarDrawerToggle actionBarDrawerToggle;
@@ -69,11 +71,12 @@ public class MeditationPlayer extends BaseActivity {
 //        });
 
         final Runnable UpdateSongTime = new Runnable() {
+            @Override
             public void run() {
                 double startTime = mediaPlayer.getCurrentPosition();
                 txtTime.setText(MyFunctions.returnTimeString(startTime));
                 seekBar.setProgress((int) startTime);
-                myHandler.postDelayed(this, 100);
+                myHandler.postDelayed(this, 1000);
             }
         };
 
@@ -86,7 +89,8 @@ public class MeditationPlayer extends BaseActivity {
                     seekBar.setEnabled(true);
                     mediaPlayer.start();
                     playButton.setImageResource(android.R.drawable.ic_media_pause);
-                    myHandler.postDelayed(UpdateSongTime, 100);
+                    // updates the current song time
+                    myHandler.postDelayed(UpdateSongTime, 1000);
                 } else if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                     playButton.setImageResource(android.R.drawable.ic_media_play);
@@ -122,19 +126,37 @@ public class MeditationPlayer extends BaseActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //Add functionality to move the media player to the
+                /* //Add functionality to move the media player to the
                 //chosen place
-                mediaPlayer.seekTo(progress);
+                mediaPlayer.seekTo(progress);*/
+
+                if (fromUser) {
+                    int secProgress = seekBar.getSecondaryProgress();
+
+                    if (secProgress > progress || isSeekBarTracking) {
+                        mediaPlayer.seekTo(progress);
+                    } else {
+                        seekBar.setProgress(seekBar.getProgress());
+                    }
+                }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                return;
+                isSeekBarTracking = true;
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                return;
+                isSeekBarTracking = false;
+            }
+        });
+
+
+        mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mp, int percent) {
+                seekBar.setSecondaryProgress((seekBar.getMax() / 100) * percent);
             }
         });
     }
