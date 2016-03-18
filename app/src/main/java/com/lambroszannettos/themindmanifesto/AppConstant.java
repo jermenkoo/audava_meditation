@@ -17,7 +17,9 @@ public class AppConstant {
     public static final String TRUE = "true";
     public static final String MEDITATE = "Audava Meditation";
 
-    public static final int SKIP_AMOUNT = 15000; //in milliseconds
+    // miliseconds
+    public static final int SAFE_ENDING = 1000;
+    public static final int SKIP_AMOUNT = 15000;
 
     public static final DrawerLayout drawerLayout = null;
     public static final ActionBarDrawerToggle actionBarDrawerToggle = null;
