@@ -18,26 +18,14 @@ import android.widget.TextView;
  * Created by Lambros on 04/03/16.
  */
 public class MeditationPlayer extends BaseActivity {
-
-    public android.os.Handler myHandler = new android.os.Handler();
     boolean isSeekBarTracking = false;
-
-//    DrawerLayout drawerLayout;
-//    ActionBarDrawerToggle actionBarDrawerToggle;
-//    Toolbar toolbar;
+    public android.os.Handler myHandler = new android.os.Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-//
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
-//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         //Find all the UI elements and assign variables to them
         final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
@@ -57,26 +45,19 @@ public class MeditationPlayer extends BaseActivity {
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
 
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.menu_relationships:
-//                        MenuItem thisItem = item;
-//                        txtCurrentIntervention.setText("Finally!");
-//                        drawerLayout.closeDrawers();
-//                }
-//                return false;
-//            }
-//        });
-
         final Runnable UpdateSongTime = new Runnable() {
             @Override
             public void run() {
+                if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - 2000) {
+                    mediaPlayer.seekTo(0);
+                    mediaPlayer.pause();
+                    playButton.setImageResource(android.R.drawable.ic_media_play);
+                }
+
                 double startTime = mediaPlayer.getCurrentPosition();
                 txtTime.setText(MyFunctions.returnTimeString(startTime));
                 seekBar.setProgress((int) startTime);
-                myHandler.postDelayed(this, 1000);
+                myHandler.postDelayed(this, 999);
             }
         };
 
@@ -84,7 +65,6 @@ public class MeditationPlayer extends BaseActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (!mediaPlayer.isPlaying()) {
                     seekBar.setEnabled(true);
                     mediaPlayer.start();
@@ -126,13 +106,8 @@ public class MeditationPlayer extends BaseActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                /* //Add functionality to move the media player to the
-                //chosen place
-                mediaPlayer.seekTo(progress);*/
-
                 if (fromUser) {
                     int secProgress = seekBar.getSecondaryProgress();
-
                     if (secProgress > progress || isSeekBarTracking) {
                         mediaPlayer.seekTo(progress);
                     } else {
@@ -152,7 +127,6 @@ public class MeditationPlayer extends BaseActivity {
             }
         });
 
-
         mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
@@ -160,12 +134,5 @@ public class MeditationPlayer extends BaseActivity {
             }
         });
     }
-
-//    @Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//
-//        actionBarDrawerToggle.syncState();
-//    }
 
 }
