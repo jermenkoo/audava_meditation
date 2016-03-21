@@ -11,10 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 
 public class AppConstant {
-    public static final String PERSONAL_NOTES_PREFERENCE = "personal_notes_selection";
-    public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
-    public static final String FALSE = "false";
-    public static final String TRUE = "true";
     public static final String MEDITATE = "Audava Meditation";
 
     // miliseconds

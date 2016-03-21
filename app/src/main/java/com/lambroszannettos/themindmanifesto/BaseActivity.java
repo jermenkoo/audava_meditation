@@ -45,6 +45,13 @@ public class BaseActivity extends AppCompatActivity {
                         startActivity(loadRelationships);
                         drawerLayout.closeDrawers();
                         break;
+
+                    case R.id.menu_about:
+                        Intent loadAbout = new Intent(getApplicationContext(), About.class);
+                        startActivity(loadAbout);
+                        drawerLayout.closeDrawers();
+                        break;
+
                 }
                 return false;
             }

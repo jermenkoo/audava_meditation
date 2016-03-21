@@ -20,6 +20,9 @@
         <activity android:name="com.lambroszannettos.themindmanifesto.MeditationPlayer" />
         <activity android:name="com.lambroszannettos.themindmanifesto.BaseActivity" />
         <activity android:name=".ChooseMeditation"/>
+        <activity android:name=".About"/>
+
+        <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     </application>
 </manifest>
