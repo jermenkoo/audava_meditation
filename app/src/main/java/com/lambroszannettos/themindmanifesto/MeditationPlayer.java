@@ -1,7 +1,10 @@
 package com.lambroszannettos.themindmanifesto;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -18,6 +22,18 @@ import android.widget.TextView;
  * Created by Lambros on 04/03/16.
  */
 public class MeditationPlayer extends BaseActivity {
+
+    //Not sure if this handler is needed anymore,
+    //another handler is being used to handle the songTime updating
+
+    static Handler handler = new Handler() {
+        public void handleMessage(Message m) {
+//            Intent startMeditationPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
+//            startActivity(startMeditationPlayer);
+        }
+    };
+
+
     boolean isSeekBarTracking = false;
     public android.os.Handler myHandler = new android.os.Handler();
 
@@ -26,6 +42,10 @@ public class MeditationPlayer extends BaseActivity {
 
         super.onCreate(savedInstanceState);
 
+        //Inflate the appropriate layout within the content_frame FrameLayout
+        //which is in the activity_main layout
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.player_layout, contentFrameLayout);
 
         //Find all the UI elements and assign variables to them
         final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
@@ -133,6 +153,17 @@ public class MeditationPlayer extends BaseActivity {
                 seekBar.setSecondaryProgress((seekBar.getMax() / 100) * percent);
             }
         });
+
+        Thread song_player = new Thread() {
+            @Override
+            public void run() {
+                Message msg = handler.obtainMessage();
+                handler.sendMessage(msg);
+            }
+        };
+
+        song_player.start();
+
     }
 
 }

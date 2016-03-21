@@ -19,6 +19,7 @@
         <activity android:name="com.lambroszannettos.themindmanifesto.MainActivity" />
         <activity android:name="com.lambroszannettos.themindmanifesto.MeditationPlayer" />
         <activity android:name="com.lambroszannettos.themindmanifesto.BaseActivity" />
+        <activity android:name=".ChooseMeditation"/>
 
     </application>
 </manifest>

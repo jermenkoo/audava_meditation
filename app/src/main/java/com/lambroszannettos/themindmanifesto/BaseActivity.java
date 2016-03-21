@@ -1,5 +1,6 @@
 package com.lambroszannettos.themindmanifesto;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -7,7 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -21,6 +21,7 @@ public class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+//        final FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -32,10 +33,18 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.menu_relationships:
-                        MenuItem thisItem = item;
-//                        txtCurrentIntervention.setText("Finally!");
+
+                    case R.id.menu_home:
+                        Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
+                        startActivity(loadPlayer);
                         drawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.menu_relationships:
+                        Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
+                        startActivity(loadRelationships);
+                        drawerLayout.closeDrawers();
+                        break;
                 }
                 return false;
             }
