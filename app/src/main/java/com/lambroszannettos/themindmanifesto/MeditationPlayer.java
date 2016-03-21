@@ -23,23 +23,12 @@ import android.widget.TextView;
  */
 public class MeditationPlayer extends BaseActivity {
 
-    //Not sure if this handler is needed anymore,
-    //another handler is being used to handle the songTime updating
-
-    static Handler handler = new Handler() {
-        public void handleMessage(Message m) {
-//            Intent startMeditationPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
-//            startActivity(startMeditationPlayer);
-        }
-    };
-
-
     boolean isSeekBarTracking = false;
     public android.os.Handler myHandler = new android.os.Handler();
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         //Inflate the appropriate layout within the content_frame FrameLayout
@@ -49,21 +38,19 @@ public class MeditationPlayer extends BaseActivity {
 
         //Find all the UI elements and assign variables to them
         final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
-
         final TextView txtTime = (TextView) findViewById(R.id.txt_time);
         final TextView txtCurrentDuration = (TextView) findViewById(R.id.txt_current_duration);
         final TextView txtCurrentIntervention = (TextView) findViewById(R.id.txt_current_intervention);
-
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
-
         final ImageButton playButton = (ImageButton) findViewById(R.id.btn_play_pause);
         final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
         final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
         seekBar.setMax(mediaPlayer.getDuration());
         seekBar.setEnabled(false);
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
+
 
         final Runnable UpdateSongTime = new Runnable() {
             @Override
@@ -153,17 +140,12 @@ public class MeditationPlayer extends BaseActivity {
                 seekBar.setSecondaryProgress((seekBar.getMax() / 100) * percent);
             }
         });
+    }
 
-        Thread song_player = new Thread() {
-            @Override
-            public void run() {
-                Message msg = handler.obtainMessage();
-                handler.sendMessage(msg);
-            }
-        };
-
-        song_player.start();
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mediaPlayer.stop();
     }
 
 }

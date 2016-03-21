@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
  */
 public class ChooseMeditation extends BaseActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
