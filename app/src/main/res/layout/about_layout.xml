@@ -7,12 +7,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Browse All!" />
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/med_list">
-    </ListView>
+        android:text="About us"/>
 
 </LinearLayout>

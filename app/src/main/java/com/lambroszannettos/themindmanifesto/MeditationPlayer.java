@@ -1,6 +1,7 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,7 +56,7 @@ public class MeditationPlayer extends BaseActivity {
         final Runnable UpdateSongTime = new Runnable() {
             @Override
             public void run() {
-                if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - 2000) {
+                if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - AppConstant.SAFE_ENDING) {
                     mediaPlayer.seekTo(0);
                     mediaPlayer.pause();
                     playButton.setImageResource(android.R.drawable.ic_media_play);
