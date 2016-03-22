@@ -17,7 +17,9 @@ public class BaseActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
-    MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
+    public static final MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
+    public static MediaPlayer mediaPlayer = mediaPlayerSingleton.getMediaPlayerInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
