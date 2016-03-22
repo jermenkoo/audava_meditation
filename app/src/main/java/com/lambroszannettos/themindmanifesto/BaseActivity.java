@@ -1,7 +1,9 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +16,8 @@ public class BaseActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
+
+    MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
