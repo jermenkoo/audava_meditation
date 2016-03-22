@@ -26,7 +26,8 @@ public class MeditationPlayer extends BaseActivity {
 
     boolean isSeekBarTracking = false;
     public android.os.Handler myHandler = new android.os.Handler();
-    private MediaPlayer mediaPlayer;
+
+    MediaPlayer mediaPlayer = MediaPlayerSingleton.getMediaPlayerInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +47,11 @@ public class MeditationPlayer extends BaseActivity {
         final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
         final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
-        seekBar.setMax(mediaPlayer.getDuration());
-        seekBar.setEnabled(false);
+        if (!mediaPlayer.isPlaying() && mediaPlayer.getCurrentPosition() != 0) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
+            seekBar.setMax(mediaPlayer.getDuration());
+        }
+
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
 
@@ -116,6 +119,7 @@ public class MeditationPlayer extends BaseActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     int secProgress = seekBar.getSecondaryProgress();
+
                     if (secProgress > progress || isSeekBarTracking) {
                         mediaPlayer.seekTo(progress);
                     } else {
@@ -146,7 +150,7 @@ public class MeditationPlayer extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mediaPlayer.stop();
+//        mediaPlayer.pause();
     }
 
 }
