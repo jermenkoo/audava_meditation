@@ -1,24 +1,12 @@
 package com.lambroszannettos.themindmanifesto;
 
-import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Lambros on 04/03/16.
@@ -28,12 +16,9 @@ public class MeditationPlayer extends BaseActivity {
     boolean isSeekBarTracking = false;
     public android.os.Handler myHandler = new android.os.Handler();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Toast.makeText(MeditationPlayer.this, "onCreate!", Toast.LENGTH_SHORT).show();
 
         //Inflate the appropriate layout within the content_frame FrameLayout
         //which is in the activity_main layout
@@ -74,13 +59,11 @@ public class MeditationPlayer extends BaseActivity {
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
             seekBar.setMax(mediaPlayer.getDuration());
-            Toast.makeText(this, "was null", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             seekBar.setMax(mediaPlayer.getDuration());
             seekBar.setProgress(mediaPlayer.getCurrentPosition());
 
-            if(mediaPlayer.isPlaying()) {
+            if (mediaPlayer.isPlaying()) {
                 playButton.setImageResource(android.R.drawable.ic_media_pause);
             } else {
                 playButton.setImageResource(android.R.drawable.ic_media_play);
@@ -92,8 +75,6 @@ public class MeditationPlayer extends BaseActivity {
 
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
-
-
 
         //PLAY button
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +123,7 @@ public class MeditationPlayer extends BaseActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     int secProgress = seekBar.getSecondaryProgress();
-
+                    UpdateSongTime.run();
                     if (secProgress > progress || isSeekBarTracking) {
                         mediaPlayer.seekTo(progress);
                     } else {
