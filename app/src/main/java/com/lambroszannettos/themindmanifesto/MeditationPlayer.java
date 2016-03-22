@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Lambros on 04/03/16.
@@ -27,11 +28,12 @@ public class MeditationPlayer extends BaseActivity {
     boolean isSeekBarTracking = false;
     public android.os.Handler myHandler = new android.os.Handler();
 
-    MediaPlayer mediaPlayer = MediaPlayerSingleton.getMediaPlayerInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Toast.makeText(MeditationPlayer.this, "onCreate!", Toast.LENGTH_SHORT).show();
 
         //Inflate the appropriate layout within the content_frame FrameLayout
         //which is in the activity_main layout
@@ -47,30 +49,51 @@ public class MeditationPlayer extends BaseActivity {
         final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
         final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
 
-        if (!mediaPlayer.isPlaying() && mediaPlayer.getCurrentPosition() != 0) {
+
+        final Runnable UpdateSongTime = new Runnable() {
+            @Override
+            public void run() {
+
+                if (mediaPlayer != null) {
+
+                    if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - AppConstant.SAFE_ENDING) {
+                        mediaPlayer.seekTo(0);
+                        mediaPlayer.pause();
+                        playButton.setImageResource(android.R.drawable.ic_media_play);
+                    }
+
+                    double startTime = mediaPlayer.getCurrentPosition();
+                    txtTime.setText(MyFunctions.returnTimeString(startTime));
+                    seekBar.setProgress((int) startTime);
+                    myHandler.postDelayed(this, 999);
+                }
+            }
+        };
+
+        //If mediaPlayer was not loaded earlier, load it now
+        if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
             seekBar.setMax(mediaPlayer.getDuration());
+            Toast.makeText(this, "was null", Toast.LENGTH_LONG).show();
         }
+        else {
+            seekBar.setMax(mediaPlayer.getDuration());
+            seekBar.setProgress(mediaPlayer.getCurrentPosition());
+
+            if(mediaPlayer.isPlaying()) {
+                playButton.setImageResource(android.R.drawable.ic_media_pause);
+            } else {
+                playButton.setImageResource(android.R.drawable.ic_media_play);
+            }
+        }
+
+        UpdateSongTime.run();
+        myHandler.postDelayed(UpdateSongTime, 999);
 
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
 
 
-        final Runnable UpdateSongTime = new Runnable() {
-            @Override
-            public void run() {
-                if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - AppConstant.SAFE_ENDING) {
-                    mediaPlayer.seekTo(0);
-                    mediaPlayer.pause();
-                    playButton.setImageResource(android.R.drawable.ic_media_play);
-                }
-
-                double startTime = mediaPlayer.getCurrentPosition();
-                txtTime.setText(MyFunctions.returnTimeString(startTime));
-                seekBar.setProgress((int) startTime);
-                myHandler.postDelayed(this, 999);
-            }
-        };
 
         //PLAY button
         playButton.setOnClickListener(new View.OnClickListener() {
