@@ -47,27 +47,23 @@ public class BaseActivity extends AppCompatActivity {
                         case R.id.menu_home:
                             Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
                             startActivity(loadPlayer);
-                            drawerLayout.closeDrawers();
                             break;
 
                         case R.id.menu_relationships:
                             Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
                             startActivity(loadRelationships);
-                            drawerLayout.closeDrawers();
                             break;
 
                         case R.id.menu_about:
                             Intent loadAbout = new Intent(getApplicationContext(), About.class);
                             startActivity(loadAbout);
-                            drawerLayout.closeDrawers();
                             break;
                     }
 
                     currentLayoutId = item.getItemId();
-
-                } else {
-                    drawerLayout.closeDrawers();
                 }
+
+                drawerLayout.closeDrawers();
                 return false;
             }
         });
