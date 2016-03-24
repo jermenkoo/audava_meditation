@@ -34,7 +34,6 @@ public class MeditationPlayer extends BaseActivity {
         final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
         final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
 
-
         final Runnable UpdateSongTime = new Runnable() {
             @Override
             public void run() {
