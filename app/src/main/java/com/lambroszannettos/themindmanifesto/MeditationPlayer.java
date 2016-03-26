@@ -153,7 +153,6 @@ public class MeditationPlayer extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-//        mediaPlayer.pause();
     }
 
 }
