@@ -51,6 +51,7 @@ public class BaseActivity extends AppCompatActivity {
                         case R.id.menu_browse_all:
                             break;
 
+                        
                         case R.id.menu_relationships:
                             Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
                             startActivity(loadRelationships);
