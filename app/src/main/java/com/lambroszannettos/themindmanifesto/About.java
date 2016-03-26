@@ -1,7 +1,12 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.os.Bundle;
+import android.text.Html;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by Lambros on 21/03/16.
@@ -15,5 +20,8 @@ public class About extends BaseActivity {
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.about_layout, contentFrameLayout);
 
+        WebView web = (WebView) findViewById(R.id.webView_aboutUs);
+//        web.loadData(getString(R.string.aboutUsHTML), "text/html", "utf-8");
+        web.loadUrl("file:///android_asset/about_us.html");
     }
 }
