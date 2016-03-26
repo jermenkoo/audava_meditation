@@ -3,14 +3,12 @@ package com.lambroszannettos.themindmanifesto;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -20,9 +18,10 @@ public class BaseActivity extends AppCompatActivity {
 
     static int currentLayoutId;
 
+    MyFunctions myFunctions = MyFunctions.getUniqueInstance();
+
     public static final MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
     public static MediaPlayer mediaPlayer = mediaPlayerSingleton.getMediaPlayerInstance();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +48,28 @@ public class BaseActivity extends AppCompatActivity {
                             startActivity(loadPlayer);
                             break;
 
+                        case R.id.menu_browse_all:
+                            break;
+
                         case R.id.menu_relationships:
                             Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
                             startActivity(loadRelationships);
                             break;
 
+                        case R.id.menu_work:
+                            break;
+
+                        case R.id.menu_goals:
+                            break;
+
                         case R.id.menu_about:
                             Intent loadAbout = new Intent(getApplicationContext(), About.class);
                             startActivity(loadAbout);
+                            break;
+
+                        case R.id.menu_settings:
+                            Intent loadSettings = new Intent(getApplicationContext(), SettingsActivity.class);
+                            startActivity(loadSettings);
                             break;
                     }
 
@@ -67,7 +80,6 @@ public class BaseActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     @Override
@@ -76,5 +88,8 @@ public class BaseActivity extends AppCompatActivity {
 
         actionBarDrawerToggle.syncState();
     }
+
+
+
 
 }

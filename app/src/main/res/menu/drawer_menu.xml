@@ -27,27 +27,30 @@
                     android:icon="@android:drawable/btn_star"
                     android:title="@string/str_goal"></item>
 
-
             </menu>
         </item>
     </group>
-    <group android:checkableBehavior="single">
 
-        <item android:title="@string/str_settings">
-            <menu>
-                <item
-                    android:id="@+id/menu_settings"
-                    android:icon="@drawable/ic_settings_black_48dp"
-                    android:title="@string/str_settings_general"></item>
-            </menu>
-        </item>
+    <group
+        android:id="@+id/groupSettings"
+        android:checkableBehavior="single">
 
-            <item
-                android:id="@+id/menu_about"
-                android:icon="@drawable/ic_settings_black_48dp"
-                android:title="@string/str_about"></item>
+        <item
+            android:id="@+id/menu_settings"
+            android:icon="@drawable/ic_settings_black_48dp"
+            android:title="@string/str_settings"></item>
 
     </group>
 
+    <group
+        android:id="@+id/groupAbout"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_about"
+            android:icon="@drawable/ic_logo"
+            android:title="@string/str_about"></item>
+
+    </group>
 
 </menu>
