@@ -21,6 +21,7 @@
         <activity android:name="com.lambroszannettos.themindmanifesto.BaseActivity" />
         <activity android:name=".ChooseMeditation"/>
         <activity android:name=".About"/>
+        <activity android:name=".SettingsActivity"/>
 
         <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 

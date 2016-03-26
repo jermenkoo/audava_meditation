@@ -1,11 +1,14 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.app.Application;
+import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,6 +19,8 @@ import java.util.concurrent.TimeUnit;
  *
  */
 public final class MyFunctions extends Application {
+
+    private static MyFunctions uniqueInstance = new MyFunctions();
 
     private MyFunctions() {
     }
@@ -30,5 +35,8 @@ public final class MyFunctions extends Application {
                                 toMinutes((long) milliseconds)));
     }
 
+    public static MyFunctions getUniqueInstance() {
+        return uniqueInstance;
+    }
 
 }
