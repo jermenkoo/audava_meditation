@@ -17,6 +17,5 @@ public class ChooseMeditation extends BaseActivity {
 
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.choose_med_layout, contentFrameLayout);
-
     }
 }
