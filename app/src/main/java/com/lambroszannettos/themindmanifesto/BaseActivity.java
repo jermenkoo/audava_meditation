@@ -1,7 +1,5 @@
 package com.lambroszannettos.themindmanifesto;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
@@ -12,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -47,7 +44,6 @@ public class BaseActivity extends AppCompatActivity {
 
         //new instance of class to detect headphones plugged in/out
         myReceiver = new HeadphoneStateReceiver();
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -101,8 +97,6 @@ public class BaseActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-<<<<<<< HEAD
-=======
     @Override
     protected void onResume() {
         //Register receiver for headphone detection
@@ -117,5 +111,4 @@ public class BaseActivity extends AppCompatActivity {
         unregisterReceiver(myReceiver);
         super.onPause();
     }
->>>>>>> detectHeadphones
 }
