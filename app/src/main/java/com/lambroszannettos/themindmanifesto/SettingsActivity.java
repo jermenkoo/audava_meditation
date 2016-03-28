@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Lambros on 26/03/16.
@@ -64,6 +65,8 @@ public class SettingsActivity extends BaseActivity {
             public void onClick(View v) {
                 functions.saveSetting(getApplicationContext(),AppConstant.SKIP_KEY, Integer.toString(skipAmount.getProgress()));
                 functions.saveSetting(getApplicationContext(),AppConstant.SPLASH_SCREEN_KEY, Boolean.toString(showSplashScreen.isChecked()));
+
+                Toast.makeText(SettingsActivity.this, "New settings saved", Toast.LENGTH_SHORT).show();
             }
         });
 
