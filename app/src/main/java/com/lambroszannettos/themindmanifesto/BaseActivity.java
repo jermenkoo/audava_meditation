@@ -39,7 +39,6 @@ public class BaseActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-
                 if (currentLayoutId != item.getItemId()) {
                     switch (item.getItemId()) {
 
@@ -88,8 +87,4 @@ public class BaseActivity extends AppCompatActivity {
 
         actionBarDrawerToggle.syncState();
     }
-
-
-
-
 }

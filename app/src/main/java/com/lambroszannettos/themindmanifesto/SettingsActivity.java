@@ -9,7 +9,6 @@ import android.widget.SeekBar;
  */
 public class SettingsActivity extends BaseActivity {
 
-
     public SettingsActivity() {
     }
 

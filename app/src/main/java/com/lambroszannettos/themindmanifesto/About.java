@@ -21,7 +21,6 @@ public class About extends BaseActivity {
         getLayoutInflater().inflate(R.layout.about_layout, contentFrameLayout);
 
         WebView web = (WebView) findViewById(R.id.webView_aboutUs);
-//        web.loadData(getString(R.string.aboutUsHTML), "text/html", "utf-8");
         web.loadUrl("file:///android_asset/about_us.html");
     }
 }
