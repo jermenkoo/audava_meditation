@@ -89,7 +89,4 @@ public class BaseActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-
-
-
 }

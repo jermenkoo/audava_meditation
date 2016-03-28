@@ -96,9 +96,9 @@ public class MeditationPlayer extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //If adding 15 seconds is not going to go beyond length...
-                if ((mediaPlayer.getCurrentPosition() + AppConstant.SKIP_AMOUNT)
+                if ((mediaPlayer.getCurrentPosition() + AppConstant.DEFAULT_SKIP_AMOUNT)
                         <= mediaPlayer.getDuration()) {
-                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + AppConstant.SKIP_AMOUNT);
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + AppConstant.DEFAULT_SKIP_AMOUNT);
                 }
             }
         });
@@ -107,9 +107,9 @@ public class MeditationPlayer extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //If going back 15 seconds is not going to go to less than 0...
-                if ((mediaPlayer.getCurrentPosition() - AppConstant.SKIP_AMOUNT)
+                if ((mediaPlayer.getCurrentPosition() - AppConstant.DEFAULT_SKIP_AMOUNT)
                         >= 0) {
-                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - AppConstant.SKIP_AMOUNT);
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - AppConstant.DEFAULT_SKIP_AMOUNT);
                 } else {
                     mediaPlayer.seekTo(0);
                 }
