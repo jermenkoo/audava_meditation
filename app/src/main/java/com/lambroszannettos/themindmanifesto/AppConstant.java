@@ -15,7 +15,13 @@ public class AppConstant {
 
     // miliseconds
     public static final int SAFE_ENDING = 1000;
-    public static final int SKIP_AMOUNT = 15000;
+    public static final int MAX_SKIP_AMOUNT = 60;
+
+    public static final int DEFAULT_SKIP_AMOUNT = 15;
+    public static final boolean DEFAULT_SPLASH_SCREEN_SETTING = true;
+
+    public static final String SKIP_KEY = "skipAmount";
+    public static final String SPLASH_SCREEN_KEY = "showSplashScreen";
 
     public static final DrawerLayout drawerLayout = null;
     public static final ActionBarDrawerToggle actionBarDrawerToggle = null;

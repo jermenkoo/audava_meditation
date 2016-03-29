@@ -1,6 +1,7 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,15 +13,20 @@ import android.view.MenuItem;
 
 public class BaseActivity extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle actionBarDrawerToggle;
-    Toolbar toolbar;
+    //For drawer menu functionality
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Toolbar toolbar;
+
+    //For headphone detection
+    private HeadphoneStateReceiver myReceiver;
 
     static int currentLayoutId;
 
-    MyFunctions myFunctions = MyFunctions.getUniqueInstance();
+    private MyFunctions myFunctions = MyFunctions.getUniqueInstance();
 
-    public static final MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
+    //For media player
+    private static final MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
     public static MediaPlayer mediaPlayer = mediaPlayerSingleton.getMediaPlayerInstance();
 
     @Override
@@ -35,6 +41,9 @@ public class BaseActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        //new instance of class to detect headphones plugged in/out
+        myReceiver = new HeadphoneStateReceiver();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -84,7 +93,21 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         actionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onResume() {
+        //Register receiver for headphone detection
+        IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        registerReceiver(myReceiver, filter);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        //Unregister receiver for headphone detection
+        unregisterReceiver(myReceiver);
+        super.onPause();
     }
 }
