@@ -1,8 +1,6 @@
 package com.lambroszannettos.themindmanifesto;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 public class MainActivity extends BaseActivity {
