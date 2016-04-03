@@ -30,6 +30,7 @@ public class MeditationPlayer extends BaseActivity {
         final TextView txtTime = (TextView) findViewById(R.id.txt_time);
         final TextView txtCurrentDuration = (TextView) findViewById(R.id.txt_current_duration);
         final TextView txtCurrentIntervention = (TextView) findViewById(R.id.txt_current_intervention);
+        final TextView txtHeadphoneMessage = (TextView) findViewById(R.id.txt_headphone_message);
         final ImageButton playButton = (ImageButton) findViewById(R.id.btn_play_pause);
         final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
         final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
@@ -51,6 +52,13 @@ public class MeditationPlayer extends BaseActivity {
                     seekBar.setProgress((int) startTime);
                     myHandler.postDelayed(this, 999);
                 }
+                //For headphone message, create unique Runnable for it later
+                if (AppConstant.HEADSET_ON == false) {
+                    txtHeadphoneMessage.setText("For the best experience,\nplease plug your headset in.");
+                } else {
+                    txtHeadphoneMessage.setText("");
+                }
+
             }
         };
 

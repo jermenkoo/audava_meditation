@@ -3,6 +3,7 @@ package com.lambroszannettos.themindmanifesto;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
@@ -55,6 +56,7 @@ public final class MyFunctions extends Application {
 
         return result;
     }
+
 
     public static MyFunctions getUniqueInstance() {
         return uniqueInstance;

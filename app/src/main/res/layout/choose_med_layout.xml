@@ -6,8 +6,10 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Browse All!" />
+        android:layout_height="wrap_content"
+        android:text="Browse interventions..."
+        android:gravity="center"
+        android:id="@+id/txt_choose_med"/>
 
     <ListView
         android:layout_width="match_parent"
