@@ -10,6 +10,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -57,6 +60,9 @@ public class BaseActivity extends AppCompatActivity {
                             break;
 
                         case R.id.menu_browse_all:
+                            Intent loadBrowseAll = new Intent(getApplicationContext(), ChooseMeditation.class);
+                            startActivity(loadBrowseAll);
+
                             break;
 
                         case R.id.menu_relationships:
@@ -65,9 +71,13 @@ public class BaseActivity extends AppCompatActivity {
                             break;
 
                         case R.id.menu_work:
+                            Intent loadWork = new Intent(getApplicationContext(), ChooseMeditation.class);
+                            startActivity(loadWork);
                             break;
 
                         case R.id.menu_goals:
+                            Intent loadGoals = new Intent(getApplicationContext(), ChooseMeditation.class);
+                            startActivity(loadGoals);
                             break;
 
                         case R.id.menu_about:
