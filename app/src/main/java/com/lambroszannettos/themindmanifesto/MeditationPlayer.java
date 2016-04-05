@@ -1,12 +1,23 @@
 package com.lambroszannettos.themindmanifesto;
 
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
 
 /**
  * Created by Lambros on 04/03/16.
@@ -15,6 +26,7 @@ public class MeditationPlayer extends BaseActivity {
 
     boolean isSeekBarTracking = false;
     public android.os.Handler myHandler = new android.os.Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +37,9 @@ public class MeditationPlayer extends BaseActivity {
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.player_layout, contentFrameLayout);
 
+        MyFunctions functions = MyFunctions.getUniqueInstance();
+
         //Find all the UI elements and assign variables to them
-        final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
         final TextView txtTime = (TextView) findViewById(R.id.txt_time);
         final TextView txtCurrentDuration = (TextView) findViewById(R.id.txt_current_duration);
         final TextView txtCurrentIntervention = (TextView) findViewById(R.id.txt_current_intervention);
@@ -34,6 +47,7 @@ public class MeditationPlayer extends BaseActivity {
         final ImageButton playButton = (ImageButton) findViewById(R.id.btn_play_pause);
         final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
         final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
+        final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
 
         final Runnable UpdateSongTime = new Runnable() {
             @Override
@@ -58,13 +72,27 @@ public class MeditationPlayer extends BaseActivity {
                 } else {
                     txtHeadphoneMessage.setText("");
                 }
-
             }
         };
 
+        ArrayList<File> files = functions.getAllFilesInAssetByExtension(this, AppConstant.INTERVENTION_FOLDER, ".m4a");
+
+
         //If mediaPlayer was not loaded earlier, load it now
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
+
+            AssetFileDescriptor afd;
+            try {
+                afd = getApplicationContext().getAssets().openFd(AppConstant.INTERVENTION_FOLDER + files.get(0).getAbsolutePath());
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                mediaPlayer.prepare();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+//            mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
             seekBar.setMax(mediaPlayer.getDuration());
         } else {
             seekBar.setMax(mediaPlayer.getDuration());
@@ -80,8 +108,10 @@ public class MeditationPlayer extends BaseActivity {
         UpdateSongTime.run();
         myHandler.postDelayed(UpdateSongTime, 999);
 
+
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
         txtCurrentIntervention.setText("Fly Easy");
+
 
         //PLAY button
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +186,9 @@ public class MeditationPlayer extends BaseActivity {
                 seekBar.setSecondaryProgress((seekBar.getMax() / 100) * percent);
             }
         });
+
     }
+
 
     @Override
     protected void onStop() {

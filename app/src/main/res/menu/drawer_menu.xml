@@ -16,16 +16,16 @@
 
                 <item
                     android:id="@+id/menu_relationships"
-                    android:icon="@drawable/ic_heart_black_48dp"
+                    android:icon="@drawable/relationships_24dp"
                     android:title="@string/str_relationships"></item>
                 <item
-                    android:id="@+id/menu_work"
-                    android:icon="@drawable/ic_work_black_48dp"
-                    android:title="@string/str_work"></item>
+                    android:id="@+id/menu_health"
+                    android:icon="@drawable/ic_heart_black_48dp"
+                    android:title="@string/str_health"></item>
                 <item
-                    android:id="@+id/menu_goals"
-                    android:icon="@android:drawable/btn_star"
-                    android:title="@string/str_goal"></item>
+                    android:id="@+id/menu_business"
+                    android:icon="@drawable/ic_work_black_48dp"
+                    android:title="@string/str_business"></item>
 
             </menu>
         </item>
@@ -48,7 +48,6 @@
 
         <item
             android:id="@+id/menu_about"
-            android:icon="@drawable/ic_logo"
             android:title="@string/str_about"></item>
 
     </group>

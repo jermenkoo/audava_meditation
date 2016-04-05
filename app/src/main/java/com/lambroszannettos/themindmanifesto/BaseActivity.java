@@ -10,9 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.io.File;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -26,11 +25,12 @@ public class BaseActivity extends AppCompatActivity {
 
     static int currentLayoutId;
 
-    private MyFunctions myFunctions = MyFunctions.getUniqueInstance();
+//    private MyFunctions myFunctions = MyFunctions.getUniqueInstance();
 
     //For media player
     private static final MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
-    public static MediaPlayer mediaPlayer = mediaPlayerSingleton.getMediaPlayerInstance();
+    public MediaPlayer mediaPlayer = mediaPlayerSingleton.getMediaPlayerInstance();
+    public static File currentlySelectedIntervention = mediaPlayerSingleton.getCurrentlySelectedIntervention();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +70,12 @@ public class BaseActivity extends AppCompatActivity {
                             startActivity(loadRelationships);
                             break;
 
-                        case R.id.menu_work:
+                        case R.id.menu_health:
                             Intent loadWork = new Intent(getApplicationContext(), ChooseMeditation.class);
                             startActivity(loadWork);
                             break;
 
-                        case R.id.menu_goals:
+                        case R.id.menu_business:
                             Intent loadGoals = new Intent(getApplicationContext(), ChooseMeditation.class);
                             startActivity(loadGoals);
                             break;
