@@ -6,8 +6,8 @@
     <string name="str_find_interventions">My Interventions</string>
     <string name="str_browse_all">Browse all…</string>
     <string name="str_relationships">Relationships</string>
-    <string name="str_work">Work</string>
-    <string name="str_goal">Achieving goals</string>
+    <string name="str_health">Health</string>
+    <string name="str_business">Business</string>
     <string name="str_settings">Settings</string>
     <string name="str_about">About</string>
 </resources>

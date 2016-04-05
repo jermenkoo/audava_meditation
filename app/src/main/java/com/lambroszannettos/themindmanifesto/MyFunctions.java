@@ -3,9 +3,13 @@ package com.lambroszannettos.themindmanifesto;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import junit.framework.Assert;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -57,6 +61,27 @@ public final class MyFunctions extends Application {
         return result;
     }
 
+
+    public ArrayList<File> getAllFilesInAssetByExtension(Context context, String subFolder, String extension) {
+        Assert.assertNotNull(context);
+
+        try {
+            String[] files = context.getAssets().list(subFolder);
+            ArrayList<File> filesWithExtension = new ArrayList<>();
+
+            for (String file : files) {
+                if (file.endsWith(extension)) {
+                    filesWithExtension.add(new File(file));
+                }
+            }
+
+            return filesWithExtension;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static MyFunctions getUniqueInstance() {
         return uniqueInstance;
