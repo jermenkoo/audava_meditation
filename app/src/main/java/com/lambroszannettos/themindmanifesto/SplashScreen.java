@@ -23,8 +23,8 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 try {
                     sleep(3000);
-                    Intent startMainScreen = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(startMainScreen);
+                    Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
+                    startActivity(loadPlayer);
                     finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

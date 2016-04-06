@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class BaseActivity extends AppCompatActivity {
 
+    MyFunctions functions = MyFunctions.getUniqueInstance();
+
     //For drawer menu functionality
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -34,10 +36,11 @@ public class BaseActivity extends AppCompatActivity {
 
     //For media player
     static MediaPlayer mediaPlayer = MediaPlayerSingleton.getInstance().mediaPlayer;
+    String skipSetting;
+    int skipAmount;
 
     static String interventionCategory;
 
-    MyFunctions functions = MyFunctions.getUniqueInstance();
     public ArrayList<File> allAudioFiles;
 
     @Override
@@ -58,7 +61,13 @@ public class BaseActivity extends AppCompatActivity {
 
         //Get list of all m4a files in assets folder
         allAudioFiles = getAllFilesInAssetByExtension(this, AppConstant.INTERVENTION_FOLDER, ".m4a");
-        //selectIntervention(Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION)));
+
+        try {
+            skipSetting = functions.readSetting(this, AppConstant.SKIP_KEY);
+            skipAmount = Integer.parseInt(skipSetting);
+        } catch (RuntimeException e) {
+
+        }
 
 
         if(mediaPlayer == null) {
@@ -167,9 +176,21 @@ public class BaseActivity extends AppCompatActivity {
         return null;
     }
 
-    public void selectIntervention (int index, Boolean displayMessage) {
+
+    public void selectIntervention (String title, String album, Boolean displayMessage) {
 
         AssetFileDescriptor afd;
+        int index = 0;
+        for (File f: allAudioFiles) {
+            String tempAlbum = functions.getAudioAlbum(this, f, AppConstant.INTERVENTION_FOLDER);
+            String tempTitle = functions.getAudioTitle(this, f, AppConstant.INTERVENTION_FOLDER);
+
+            if(tempAlbum.equals(album) && tempTitle.equals(title)) {
+                break;
+            } else {
+                index++;
+            }
+        }
 
         try {
             afd = this.getAssets().openFd(AppConstant.INTERVENTION_FOLDER + allAudioFiles.get(index).getAbsolutePath());
