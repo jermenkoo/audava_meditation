@@ -19,13 +19,16 @@ public class MainActivity extends BaseActivity {
         //If they are null, write the settings with the default values
         if (skipSetting == "") {
             functions.saveSetting(this, AppConstant.SKIP_KEY, Integer.toString(AppConstant.DEFAULT_SKIP_AMOUNT));
+            skipSetting = functions.readSetting(this, AppConstant.SKIP_KEY);
         }
         if (splashScreenSetting == "") {
             functions.saveSetting(this, AppConstant.SPLASH_SCREEN_KEY, Boolean.toString(AppConstant.DEFAULT_SPLASH_SCREEN_SETTING));
+            splashScreenSetting = functions.readSetting(this, AppConstant.SPLASH_SCREEN_KEY);
         }
         if (lastIntervention == "") {
             //Set file at index 0 as last intervention if there was none saved
             functions.saveSetting(this, AppConstant.CURRENT_INTERVENTION, "0");
+            lastIntervention = functions.readSetting(this, AppConstant.CURRENT_INTERVENTION);
         }
 
         if (mediaPlayer == null) {
