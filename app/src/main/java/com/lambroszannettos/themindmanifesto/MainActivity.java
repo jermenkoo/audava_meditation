@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
-
 public class MainActivity extends BaseActivity {
 
     @Override
@@ -18,28 +17,34 @@ public class MainActivity extends BaseActivity {
         String lastIntervention = functions.readSetting(this, AppConstant.CURRENT_INTERVENTION);
 
         //If they are null, write the settings with the default values
-        if(skipSetting == "") {
+        if (skipSetting == "") {
             functions.saveSetting(this, AppConstant.SKIP_KEY, Integer.toString(AppConstant.DEFAULT_SKIP_AMOUNT));
         }
-        if(splashScreenSetting == "") {
+        if (splashScreenSetting == "") {
             functions.saveSetting(this, AppConstant.SPLASH_SCREEN_KEY, Boolean.toString(AppConstant.DEFAULT_SPLASH_SCREEN_SETTING));
         }
-        if(lastIntervention == "") {
+        if (lastIntervention == "") {
             //Set file at index 0 as last intervention if there was none saved
             functions.saveSetting(this, AppConstant.CURRENT_INTERVENTION, "0");
         }
 
-        if(mediaPlayer == null) {
+        if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
         }
-        selectIntervention(Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION)), false);
 
+        String tempAlbum = functions.getAudioAlbum(this, allAudioFiles.get(Integer.parseInt(lastIntervention)), AppConstant.INTERVENTION_FOLDER);
+        String tempTitle = functions.getAudioTitle(this, allAudioFiles.get(Integer.parseInt(lastIntervention)), AppConstant.INTERVENTION_FOLDER);
 
-        //...then load the default screen which is the player
-        Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
-        startActivity(loadPlayer);
+        selectIntervention(tempTitle,tempAlbum, false);
 
-//        currentLayoutId = R.id.menu_home;
+        //Depending on the settings, either load Splash Screen or MeditationPlayer screen
+        if (Boolean.parseBoolean(splashScreenSetting)) {
+            Intent loadSplash = new Intent(getApplicationContext(), SplashScreen.class);
+            startActivity(loadSplash);
+        } else {
+            Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
+            startActivity(loadPlayer);
+        }
     }
 
 

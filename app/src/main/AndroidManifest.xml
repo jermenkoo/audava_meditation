@@ -9,16 +9,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.lambroszannettos.themindmanifesto.SplashScreen">
+        <activity android:name="com.lambroszannettos.themindmanifesto.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.lambroszannettos.themindmanifesto.MainActivity" />
+        <!--<activity android:name="com.lambroszannettos.themindmanifesto.MainActivity" />-->
         <activity android:name="com.lambroszannettos.themindmanifesto.MeditationPlayer" />
         <activity android:name="com.lambroszannettos.themindmanifesto.BaseActivity" />
+        <activity android:name=".SplashScreen"/>
         <activity android:name=".ChooseMeditation"/>
         <activity android:name=".About"/>
         <activity android:name=".SettingsActivity"/>

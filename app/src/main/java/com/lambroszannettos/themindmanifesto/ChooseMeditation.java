@@ -33,10 +33,9 @@ public class ChooseMeditation extends BaseActivity {
         interventionList = (ListView) findViewById(R.id.med_list);
         title = (TextView) findViewById(R.id.txt_choose_med_title);
 
-        //Arraylist to hold all sets of titles and albums (i.e. categories
+        //ArrayList to hold all sets of titles and albums (i.e. categories)
         //for audio files
-        ArrayList<HashMap<String, String>> itemsList = new ArrayList<>();
-
+        final ArrayList<HashMap<String, String>> itemsList = new ArrayList<>();
 
         title.setText("Browsing: " + interventionCategory);
         //Add those files to the ListView
@@ -65,8 +64,12 @@ public class ChooseMeditation extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                //Get selected item's title and album
+                String tempTitle = itemsList.get(position).get("title");
+                String tempAlbum = itemsList.get(position).get("album");
+
                 //Call function which actually handles the switch of selected audio file
-                selectIntervention(position, true);
+                selectIntervention(tempTitle,tempAlbum, true);
             }
         });
     }

@@ -32,34 +32,41 @@ public class MeditationPlayer extends BaseActivity {
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.player_layout, contentFrameLayout);
 
-        MyFunctions functions = MyFunctions.getUniqueInstance();
-
-        //Find all the UI elements and assign variables to them
-        final TextView txtTime = (TextView) findViewById(R.id.txt_time);
-        final TextView txtCurrentDuration = (TextView) findViewById(R.id.txt_current_duration);
+        //Get UI elements and assign variables to them
+        final TextView txtTime                = (TextView) findViewById(R.id.txt_time);
+        final TextView txtCurrentDuration     = (TextView) findViewById(R.id.txt_current_duration);
         final TextView txtCurrentIntervention = (TextView) findViewById(R.id.txt_current_intervention);
-        final TextView txtHeadphoneMessage = (TextView) findViewById(R.id.txt_headphone_message);
-        final ImageButton playButton = (ImageButton) findViewById(R.id.btn_play_pause);
-        final ImageButton ffButton = (ImageButton) findViewById(R.id.btn_ff);
-        final ImageButton rewButton = (ImageButton) findViewById(R.id.btn_rew);
-        final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        final TextView txtHeadphoneMessage    = (TextView) findViewById(R.id.txt_headphone_message);
+        final ImageButton playButton          = (ImageButton) findViewById(R.id.btn_play_pause);
+        final ImageButton ffButton            = (ImageButton) findViewById(R.id.btn_ff);
+        final ImageButton rewButton           = (ImageButton) findViewById(R.id.btn_rew);
+        final SeekBar seekBar                 = (SeekBar) findViewById(R.id.seekBar);
+
+        if (mediaPlayer.isPlaying()) {
+            playButton.setImageResource(android.R.drawable.ic_media_pause);
+        } else {
+            playButton.setImageResource(android.R.drawable.ic_media_play);
+        }
+
+        txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
+        txtCurrentIntervention.setText(getCurrentInterventionTitle());
 
         final Runnable UpdateSongTime = new Runnable() {
             @Override
             public void run() {
 
-                    if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - AppConstant.SAFE_ENDING) {
-                        mediaPlayer.seekTo(0);
-                        mediaPlayer.pause();
-                        playButton.setImageResource(android.R.drawable.ic_media_play);
-                    }
+                if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - AppConstant.SAFE_ENDING) {
+                    mediaPlayer.seekTo(0);
+                    mediaPlayer.pause();
+                    playButton.setImageResource(android.R.drawable.ic_media_play);
+                }
 
-                    double startTime = mediaPlayer.getCurrentPosition();
-                    txtTime.setText(MyFunctions.returnTimeString(startTime));
+                double startTime = mediaPlayer.getCurrentPosition();
+                txtTime.setText(MyFunctions.returnTimeString(startTime));
                 seekBar.setMax(mediaPlayer.getDuration());
 
                 seekBar.setProgress((int) startTime);
-                    myHandler.postDelayed(this, 999);
+                myHandler.postDelayed(this, 999);
 
                 //For headphone message, create unique Runnable for it later
                 if (AppConstant.HEADSET_ON == false) {
@@ -70,25 +77,8 @@ public class MeditationPlayer extends BaseActivity {
             }
         };
 
-
-        //If mediaPlayer was not loaded earlier, load it now
-//            seekBar.setMax(mediaPlayer.getDuration());
-//            seekBar.setProgress(mediaPlayer.getCurrentPosition());
-//        Toast.makeText(MeditationPlayer.this, "Cur Pos:" + mediaPlayer.getCurrentPosition(), Toast.LENGTH_SHORT).show();
-
-            if (mediaPlayer.isPlaying()) {
-                playButton.setImageResource(android.R.drawable.ic_media_pause);
-            } else {
-                playButton.setImageResource(android.R.drawable.ic_media_play);
-            }
-
         UpdateSongTime.run();
         myHandler.postDelayed(UpdateSongTime, 999);
-
-//        seekBar.setMax(mediaPlayer.getDuration());
-        txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
-        txtCurrentIntervention.setText(getCurrentInterventionTitle());
-
 
         //PLAY button
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -111,9 +101,9 @@ public class MeditationPlayer extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //If adding 15 seconds is not going to go beyond length...
-                if ((mediaPlayer.getCurrentPosition() + AppConstant.DEFAULT_SKIP_AMOUNT)
+                if ((mediaPlayer.getCurrentPosition() + skipAmount)
                         <= mediaPlayer.getDuration()) {
-                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + AppConstant.DEFAULT_SKIP_AMOUNT);
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + skipAmount);
                 }
             }
         });
@@ -122,9 +112,9 @@ public class MeditationPlayer extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //If going back 15 seconds is not going to go to less than 0...
-                if ((mediaPlayer.getCurrentPosition() - AppConstant.DEFAULT_SKIP_AMOUNT)
+                if ((mediaPlayer.getCurrentPosition() - skipAmount)
                         >= 0) {
-                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - AppConstant.DEFAULT_SKIP_AMOUNT);
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - skipAmount);
 
                 } else {
                     mediaPlayer.seekTo(0);
