@@ -1,9 +1,7 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.content.res.AssetFileDescriptor;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,10 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 
 /**
@@ -53,8 +48,6 @@ public class MeditationPlayer extends BaseActivity {
             @Override
             public void run() {
 
-                if (mediaPlayer != null) {
-
                     if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration() - AppConstant.SAFE_ENDING) {
                         mediaPlayer.seekTo(0);
                         mediaPlayer.pause();
@@ -63,9 +56,11 @@ public class MeditationPlayer extends BaseActivity {
 
                     double startTime = mediaPlayer.getCurrentPosition();
                     txtTime.setText(MyFunctions.returnTimeString(startTime));
-                    seekBar.setProgress((int) startTime);
+                seekBar.setMax(mediaPlayer.getDuration());
+
+                seekBar.setProgress((int) startTime);
                     myHandler.postDelayed(this, 999);
-                }
+
                 //For headphone message, create unique Runnable for it later
                 if (AppConstant.HEADSET_ON == false) {
                     txtHeadphoneMessage.setText("For the best experience,\nplease plug your headset in.");
@@ -75,42 +70,24 @@ public class MeditationPlayer extends BaseActivity {
             }
         };
 
-        ArrayList<File> files = functions.getAllFilesInAssetByExtension(this, AppConstant.INTERVENTION_FOLDER, ".m4a");
-
 
         //If mediaPlayer was not loaded earlier, load it now
-        if (mediaPlayer == null) {
-
-            AssetFileDescriptor afd;
-            try {
-                afd = getApplicationContext().getAssets().openFd(AppConstant.INTERVENTION_FOLDER + files.get(0).getAbsolutePath());
-                mediaPlayer = new MediaPlayer();
-                mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                mediaPlayer.prepare();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-//            mediaPlayer = MediaPlayer.create(this, R.raw.flyeasy); //Load media file
-            seekBar.setMax(mediaPlayer.getDuration());
-        } else {
-            seekBar.setMax(mediaPlayer.getDuration());
-            seekBar.setProgress(mediaPlayer.getCurrentPosition());
+//            seekBar.setMax(mediaPlayer.getDuration());
+//            seekBar.setProgress(mediaPlayer.getCurrentPosition());
+//        Toast.makeText(MeditationPlayer.this, "Cur Pos:" + mediaPlayer.getCurrentPosition(), Toast.LENGTH_SHORT).show();
 
             if (mediaPlayer.isPlaying()) {
                 playButton.setImageResource(android.R.drawable.ic_media_pause);
             } else {
                 playButton.setImageResource(android.R.drawable.ic_media_play);
             }
-        }
 
         UpdateSongTime.run();
         myHandler.postDelayed(UpdateSongTime, 999);
 
-
+//        seekBar.setMax(mediaPlayer.getDuration());
         txtCurrentDuration.setText(MyFunctions.returnTimeString(mediaPlayer.getDuration()));
-        txtCurrentIntervention.setText("Fly Easy");
+        txtCurrentIntervention.setText(getCurrentInterventionTitle());
 
 
         //PLAY button
@@ -148,6 +125,7 @@ public class MeditationPlayer extends BaseActivity {
                 if ((mediaPlayer.getCurrentPosition() - AppConstant.DEFAULT_SKIP_AMOUNT)
                         >= 0) {
                     mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - AppConstant.DEFAULT_SKIP_AMOUNT);
+
                 } else {
                     mediaPlayer.seekTo(0);
                 }

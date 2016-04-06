@@ -1,10 +1,9 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
-import java.io.File;
-import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
 
@@ -16,7 +15,7 @@ public class MainActivity extends BaseActivity {
         MyFunctions functions = MyFunctions.getUniqueInstance();
         String skipSetting = functions.readSetting(this, AppConstant.SKIP_KEY);
         String splashScreenSetting = functions.readSetting(this, AppConstant.SPLASH_SCREEN_KEY);
-        String previousIntervention = functions.readSetting(this, AppConstant.PREVIOUS_INTERVENTION);
+        String lastIntervention = functions.readSetting(this, AppConstant.CURRENT_INTERVENTION);
 
         //If they are null, write the settings with the default values
         if((skipSetting == "") || (splashScreenSetting == "")) {
@@ -24,10 +23,16 @@ public class MainActivity extends BaseActivity {
             functions.saveSetting(this, AppConstant.SPLASH_SCREEN_KEY, Boolean.toString(AppConstant.DEFAULT_SPLASH_SCREEN_SETTING));
         }
 
-        if(previousIntervention == "") {
-            ArrayList<File> files = functions.getAllFilesInAssetByExtension(this, AppConstant.INTERVENTION_FOLDER, ".m4a");
-            functions.saveSetting(this, AppConstant.PREVIOUS_INTERVENTION, files.get(0).toString());
+        if(lastIntervention == "") {
+            //Set file at index 0 as last intervention if there was none saved
+            functions.saveSetting(this, AppConstant.CURRENT_INTERVENTION, "0");
         }
+
+        if(mediaPlayer == null) {
+            mediaPlayer = new MediaPlayer();
+        }
+        selectIntervention(Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION)), false);
+//        interventionCategory = AppConstant.BROWSE_ALL;
 
         //...then load the default screen which is the player
         Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);

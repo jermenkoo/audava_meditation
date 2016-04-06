@@ -9,28 +9,33 @@ package com.lambroszannettos.themindmanifesto;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 public class AppConstant {
-    public static final String MEDITATE = "Audava Meditation";
+//    public static final String MEDITATE = "Audava Meditation";
 
     // miliseconds
-    public static final int SAFE_ENDING = 1000;
+    public static final int SAFE_ENDING     = 1000;
     public static final int MAX_SKIP_AMOUNT = 60;
 
-    public static final int DEFAULT_SKIP_AMOUNT = 15;
+    public static final int DEFAULT_SKIP_AMOUNT = 15000;
     public static final boolean DEFAULT_SPLASH_SCREEN_SETTING = true;
 
     public static final String INTERVENTION_FOLDER = "interventions";
 
-    //Keys for Key/Value pairs for SharedPreferences
-    public static final String SKIP_KEY = "skipAmount";
-    public static final String SPLASH_SCREEN_KEY = "showSplashScreen";
-    public static final String PREVIOUS_INTERVENTION = "previousIntervention";
+    //Keywords for filtering interventions based on selection
+    public static final String BROWSE_ALL       = "all";
+    public static final String RELATIONSHIPS    = "Relationships";
+    public static final String HEALTH           = "Health";
+    public static final String BUSINESS         = "Business";
 
-    public static final DrawerLayout drawerLayout = null;
-    public static final ActionBarDrawerToggle actionBarDrawerToggle = null;
-    public static final Toolbar toolbar = null;
+    //Keys for Key/Value pairs for SharedPreferences
+    public static final String SKIP_KEY             = "skipAmount";
+    public static final String SPLASH_SCREEN_KEY    = "showSplashScreen";
+    public static final String CURRENT_INTERVENTION = "previousIntervention";
+
+//    public static final DrawerLayout drawerLayout = null;
+//    public static final ActionBarDrawerToggle actionBarDrawerToggle = null;
+//    public static final Toolbar toolbar = null;
 
     public static boolean HEADSET_ON;
 

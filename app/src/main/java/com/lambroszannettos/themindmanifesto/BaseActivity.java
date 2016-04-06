@@ -1,7 +1,9 @@
 package com.lambroszannettos.themindmanifesto;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,8 +12,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import junit.framework.Assert;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -25,12 +32,13 @@ public class BaseActivity extends AppCompatActivity {
 
     static int currentLayoutId;
 
-//    private MyFunctions myFunctions = MyFunctions.getUniqueInstance();
-
     //For media player
-    private static final MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
-    public MediaPlayer mediaPlayer = mediaPlayerSingleton.getMediaPlayerInstance();
-    public static File currentlySelectedIntervention = mediaPlayerSingleton.getCurrentlySelectedIntervention();
+    static MediaPlayer mediaPlayer = MediaPlayerSingleton.getInstance().mediaPlayer;
+
+    static String interventionCategory;
+
+    MyFunctions functions = MyFunctions.getUniqueInstance();
+    public ArrayList<File> allAudioFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,15 @@ public class BaseActivity extends AppCompatActivity {
         //new instance of class to detect headphones plugged in/out
         myReceiver = new HeadphoneStateReceiver();
 
+        //Get list of all m4a files in assets folder
+        allAudioFiles = getAllFilesInAssetByExtension(this, AppConstant.INTERVENTION_FOLDER, ".m4a");
+        //selectIntervention(Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION)));
+
+
+        if(mediaPlayer == null) {
+            mediaPlayer = new MediaPlayer();
+        }
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -55,28 +72,36 @@ public class BaseActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
 
                         case R.id.menu_home:
+
                             Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
                             startActivity(loadPlayer);
                             break;
 
                         case R.id.menu_browse_all:
-                            Intent loadBrowseAll = new Intent(getApplicationContext(), ChooseMeditation.class);
-                            startActivity(loadBrowseAll);
 
+                            Intent loadBrowseAll = new Intent(getApplicationContext(), ChooseMeditation.class);
+                            interventionCategory = AppConstant.BROWSE_ALL;
+                            startActivity(loadBrowseAll);
                             break;
 
                         case R.id.menu_relationships:
+
                             Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
+                            interventionCategory = AppConstant.RELATIONSHIPS;
                             startActivity(loadRelationships);
                             break;
 
                         case R.id.menu_health:
+
                             Intent loadWork = new Intent(getApplicationContext(), ChooseMeditation.class);
+                            interventionCategory = AppConstant.HEALTH;
                             startActivity(loadWork);
                             break;
 
                         case R.id.menu_business:
+
                             Intent loadGoals = new Intent(getApplicationContext(), ChooseMeditation.class);
+                            interventionCategory = AppConstant.BUSINESS;
                             startActivity(loadGoals);
                             break;
 
@@ -120,4 +145,56 @@ public class BaseActivity extends AppCompatActivity {
         unregisterReceiver(myReceiver);
         super.onPause();
     }
+
+    public ArrayList<File> getAllFilesInAssetByExtension(Context context, String subFolder, String extension) {
+        Assert.assertNotNull(context);
+
+        try {
+            String[] files = context.getAssets().list(subFolder);
+            ArrayList<File> filesWithExtension = new ArrayList<>();
+
+            for (String file : files) {
+                if (file.endsWith(extension)) {
+                    filesWithExtension.add(new File(file));
+                }
+            }
+
+            return filesWithExtension;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void selectIntervention (int index, Boolean displayMessage) {
+
+        AssetFileDescriptor afd;
+
+        try {
+            afd = this.getAssets().openFd(AppConstant.INTERVENTION_FOLDER + allAudioFiles.get(index).getAbsolutePath());
+
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            mediaPlayer.prepare();
+
+            functions.saveSetting(this, AppConstant.CURRENT_INTERVENTION, Integer.toString(index));
+
+            if(displayMessage) {
+                Toast.makeText(BaseActivity.this, "Selected: " + getCurrentInterventionTitle(), Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getCurrentInterventionTitle () {
+        String title;
+        int index = Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION));
+        title = functions.getAudioTitle(this, allAudioFiles.get(index), AppConstant.INTERVENTION_FOLDER);
+
+        return title;
+    }
+
 }
