@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seekarc="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,34 +12,47 @@
 
         <TextView
             android:id="@+id/txt_headphone_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:gravity="center"
             android:padding="20dp"
             android:text="Headphone message" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:gravity="bottom"
+        android:gravity="center"
         android:orientation="vertical">
 
-
-        <TextView
-            android:id="@+id/txt_time"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="00:00"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="20dp" />
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center"
+                android:text="00:00"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+            <com.lambroszannettos.themindmanifesto.SeekArc
+                android:id="@+id/seekArc"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:padding="30dp"
+                seekarc:rotation="180"
+                seekarc:startAngle="30"
+                seekarc:sweepAngle="300" />
+
+        </FrameLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
