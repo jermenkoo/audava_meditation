@@ -1,18 +1,13 @@
 package com.lambroszannettos.themindmanifesto;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaMetadataRetriever;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import junit.framework.Assert;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,11 +26,20 @@ public final class MyFunctions {
     //Function to return time formatted in "mins, seconds" format,
     //given milliseconds
     public static String returnTimeString(double milliseconds) {
-        return String.format("%d min, %d sec",
-                TimeUnit.MILLISECONDS.toMinutes((long) milliseconds),
-                TimeUnit.MILLISECONDS.toSeconds((long) milliseconds) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-                                toMinutes((long) milliseconds)));
+
+        long minutes = TimeUnit.MILLISECONDS.toMinutes((long) milliseconds);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds((long) milliseconds) -
+                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
+                        toMinutes((long) milliseconds));
+
+        if ((seconds < 10) && (minutes >= 10)) {
+            return String.format("%d:0%d", minutes, seconds);
+        } else if ((minutes < 10) && (seconds >= 10)) {
+            return String.format("0%d:%d", minutes, seconds);
+        } else {
+            return String.format("0%d:0%d", minutes, seconds);
+        }
+
     }
 
 
@@ -49,7 +53,7 @@ public final class MyFunctions {
 
     }
 
-    public String readSetting(Context context,String key) {
+    public String readSetting(Context context, String key) {
 
         SharedPreferences sharedPref;
         String result = "";
@@ -63,28 +67,6 @@ public final class MyFunctions {
 
         return result;
     }
-
-
-//    public ArrayList<File> getAllFilesInAssetByExtension(Context context, String subFolder, String extension) {
-//        Assert.assertNotNull(context);
-//
-//        try {
-//            String[] files = context.getAssets().list(subFolder);
-//            ArrayList<File> filesWithExtension = new ArrayList<>();
-//
-//            for (String file : files) {
-//                if (file.endsWith(extension)) {
-//                    filesWithExtension.add(new File(file));
-//                }
-//            }
-//
-//            return filesWithExtension;
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
     //Given an audio file, this returns the ID3 Title Field
     public String getAudioTitle(Context context, File file, String path) {

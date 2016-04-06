@@ -9,7 +9,6 @@ import android.content.Intent;
  */
 public class HeadphoneStateReceiver extends BroadcastReceiver {
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
@@ -17,14 +16,11 @@ public class HeadphoneStateReceiver extends BroadcastReceiver {
             switch (state) {
                 case 0:  // headphones plugged out
                     AppConstant.HEADSET_ON = false;
-//                    Toast.makeText(context, "Unplugged", Toast.LENGTH_SHORT).show();
                     break;
                 case 1:  // headphones plugged in
                     AppConstant.HEADSET_ON = true;
-//                    Toast.makeText(context, "Plugged", Toast.LENGTH_SHORT).show();
                     break;
                 default:
-                    // Toast.makeText(context, "Headset status error", Toast.LENGTH_LONG).show();
                     break;
             }
         }

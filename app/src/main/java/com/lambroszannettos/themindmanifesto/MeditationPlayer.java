@@ -22,6 +22,14 @@ public class MeditationPlayer extends BaseActivity {
     boolean isSeekBarTracking = false;
     public android.os.Handler myHandler = new android.os.Handler();
 
+    private TextView txtTime;
+    private TextView txtCurrentDuration;
+    private TextView txtCurrentIntervention;
+    private TextView txtHeadphoneMessage;
+    private ImageButton playButton;
+    private ImageButton ffButton;
+    private ImageButton rewButton;
+    private SeekArc seekArc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +41,14 @@ public class MeditationPlayer extends BaseActivity {
         getLayoutInflater().inflate(R.layout.player_layout, contentFrameLayout);
 
         //Get UI elements and assign variables to them
-        final TextView txtTime                = (TextView) findViewById(R.id.txt_time);
-        final TextView txtCurrentDuration     = (TextView) findViewById(R.id.txt_current_duration);
-        final TextView txtCurrentIntervention = (TextView) findViewById(R.id.txt_current_intervention);
-        final TextView txtHeadphoneMessage    = (TextView) findViewById(R.id.txt_headphone_message);
-        final ImageButton playButton          = (ImageButton) findViewById(R.id.btn_play_pause);
-        final ImageButton ffButton            = (ImageButton) findViewById(R.id.btn_ff);
-        final ImageButton rewButton           = (ImageButton) findViewById(R.id.btn_rew);
-        final SeekBar seekBar                 = (SeekBar) findViewById(R.id.seekBar);
+        txtTime                 = (TextView) findViewById(R.id.txt_time);
+        txtCurrentDuration      = (TextView) findViewById(R.id.txt_current_duration);
+        txtCurrentIntervention  = (TextView) findViewById(R.id.txt_current_intervention);
+        txtHeadphoneMessage     = (TextView) findViewById(R.id.txt_headphone_message);
+        playButton              = (ImageButton) findViewById(R.id.btn_play_pause);
+        ffButton                = (ImageButton) findViewById(R.id.btn_ff);
+        rewButton               = (ImageButton) findViewById(R.id.btn_rew);
+        seekArc                 = (SeekArc) findViewById(R.id.seekArc);
 
         if (mediaPlayer.isPlaying()) {
             playButton.setImageResource(android.R.drawable.ic_media_pause);
@@ -63,9 +71,11 @@ public class MeditationPlayer extends BaseActivity {
 
                 double startTime = mediaPlayer.getCurrentPosition();
                 txtTime.setText(MyFunctions.returnTimeString(startTime));
-                seekBar.setMax(mediaPlayer.getDuration());
+                seekArc.setMax(mediaPlayer.getDuration());
 
-                seekBar.setProgress((int) startTime);
+                seekArc.setProgress((int) startTime);
+                seekArc.invalidate();
+
                 myHandler.postDelayed(this, 999);
 
                 //For headphone message, create unique Runnable for it later
@@ -85,7 +95,7 @@ public class MeditationPlayer extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (!mediaPlayer.isPlaying()) {
-                    seekBar.setEnabled(true);
+                    seekArc.setEnabled(true);
                     mediaPlayer.start();
                     playButton.setImageResource(android.R.drawable.ic_media_pause);
                     // updates the current song time
@@ -122,36 +132,40 @@ public class MeditationPlayer extends BaseActivity {
             }
         });
 
+
         //Track seekBar changes
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser) {
                 if (fromUser) {
-                    int secProgress = seekBar.getSecondaryProgress();
+                    int secProgress = seekArc.getSweepAngle();
                     UpdateSongTime.run();
                     if (secProgress > progress || isSeekBarTracking) {
                         mediaPlayer.seekTo(progress);
                     } else {
-                        seekBar.setProgress(seekBar.getProgress());
+                        seekArc.setProgress(seekArc.getProgress());
                     }
                 }
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+            public void onStartTrackingTouch(SeekArc seekArc) {
                 isSeekBarTracking = true;
+
             }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onStopTrackingTouch(SeekArc seekArc) {
                 isSeekBarTracking = false;
+
             }
         });
+
 
         mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                seekBar.setSecondaryProgress((seekBar.getMax() / 100) * percent);
+                seekArc.setProgress((seekArc.getMax() / 100) * percent);
             }
         });
 
