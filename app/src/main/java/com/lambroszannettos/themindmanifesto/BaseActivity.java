@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -66,11 +67,10 @@ public class BaseActivity extends AppCompatActivity {
             skipSetting = functions.readSetting(this, AppConstant.SKIP_KEY);
             skipAmount = Integer.parseInt(skipSetting);
         } catch (RuntimeException e) {
-
+            Log.e("Wrong value entered", e.toString());
         }
 
-
-        if(mediaPlayer == null) {
+        if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
         }
 

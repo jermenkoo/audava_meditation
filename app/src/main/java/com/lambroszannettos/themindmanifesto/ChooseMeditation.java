@@ -69,7 +69,7 @@ public class ChooseMeditation extends BaseActivity {
                 String tempAlbum = itemsList.get(position).get("album");
 
                 //Call function which actually handles the switch of selected audio file
-                selectIntervention(tempTitle,tempAlbum, true);
+                selectIntervention(tempTitle, tempAlbum, true);
             }
         });
     }

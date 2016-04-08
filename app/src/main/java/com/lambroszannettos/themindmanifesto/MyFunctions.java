@@ -50,7 +50,6 @@ public final class MyFunctions {
         editor.putString(key, value);
 
         editor.commit();
-
     }
 
     public String readSetting(Context context, String key) {
@@ -62,7 +61,7 @@ public final class MyFunctions {
             sharedPref = context.getSharedPreferences("user_settings", Context.MODE_PRIVATE);
             result = sharedPref.getString(key, "");
         } catch (NullPointerException e) {
-            Log.d("Cannot read settings", e.toString());
+            Log.e("Cannot read settings", e.toString());
         }
 
         return result;
