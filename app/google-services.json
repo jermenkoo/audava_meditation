@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_id": "the-mind-manifesto",
+    "project_number": "347526566681",
+    "name": "The Mind Manifesto"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347526566681:android:4a71e305dda3743e",
+        "client_id": "android:com.lambroszannettos.themindmanifesto",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.lambroszannettos.themindmanifesto",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-76187332-1"
+          }
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
