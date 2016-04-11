@@ -15,6 +15,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import junit.framework.Assert;
 
 import java.io.File;
@@ -44,6 +47,9 @@ public class BaseActivity extends AppCompatActivity {
 
     public ArrayList<File> allAudioFiles;
 
+    // Tracking
+    protected Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,13 @@ public class BaseActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        // [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mTracker.enableAdvertisingIdCollection(true);
+        // [END shared_tracker]
 
         //new instance of class to detect headphones plugged in/out
         myReceiver = new HeadphoneStateReceiver();
@@ -201,7 +214,13 @@ public class BaseActivity extends AppCompatActivity {
 
             functions.saveSetting(this, AppConstant.CURRENT_INTERVENTION, Integer.toString(index));
 
-            if(displayMessage) {
+            // Log
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Interventions")
+                    .setAction("Playing: " + getCurrentInterventionTitle())
+                    .build());
+
+            if (displayMessage) {
                 Toast.makeText(BaseActivity.this, "Selected: " + getCurrentInterventionTitle(), Toast.LENGTH_SHORT).show();
             }
 

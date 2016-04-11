@@ -9,6 +9,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+
 /**
  * Created by Lambros on 26/03/16.
  */
@@ -43,6 +45,11 @@ public class SettingsActivity extends BaseActivity {
         txtSkipAmount.setText(Integer.toString(skipAmount.getProgress()));
         showSplashScreen.setChecked(Boolean.parseBoolean(splashScreenSetting));
 
+        //Log
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Settings")
+                .setAction("Changing Settings")
+                .build());
 
         skipAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
