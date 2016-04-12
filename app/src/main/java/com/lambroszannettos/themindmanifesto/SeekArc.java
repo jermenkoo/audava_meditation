@@ -207,7 +207,6 @@ public class SeekArc extends View {
 			}
 
 			
-			
 			thumbHalfheight = (int) mThumb.getIntrinsicHeight() / 2;
 			thumbHalfWidth = (int) mThumb.getIntrinsicWidth() / 2;
 			mThumb.setBounds(-thumbHalfWidth, -thumbHalfheight, thumbHalfWidth,
@@ -395,7 +394,7 @@ public class SeekArc extends View {
 		float x = xPos - mTranslateX;
 		float y = yPos - mTranslateY;
 		//invert the x-coord if we are rotating anti-clockwise
-		x= (mClockwise) ? x:-x;
+		x = (mClockwise) ? x : -x;
 		// convert to arc Angle
 		double angle = Math.toDegrees(Math.atan2(y, x) + (Math.PI / 2)
 				- Math.toRadians(mRotation));

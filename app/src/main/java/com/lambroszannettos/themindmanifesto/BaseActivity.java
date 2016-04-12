@@ -11,8 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import junit.framework.Assert;
 
@@ -43,6 +47,9 @@ public class BaseActivity extends AppCompatActivity {
 
     public ArrayList<File> allAudioFiles;
 
+    // Tracking
+    protected Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +63,13 @@ public class BaseActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
+        // [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mTracker.enableAdvertisingIdCollection(true);
+        // [END shared_tracker]
+
         //new instance of class to detect headphones plugged in/out
         myReceiver = new HeadphoneStateReceiver();
 
@@ -66,11 +80,10 @@ public class BaseActivity extends AppCompatActivity {
             skipSetting = functions.readSetting(this, AppConstant.SKIP_KEY);
             skipAmount = Integer.parseInt(skipSetting);
         } catch (RuntimeException e) {
-
+            Log.e("Wrong value entered", e.toString());
         }
 
-
-        if(mediaPlayer == null) {
+        if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
         }
 
@@ -201,7 +214,13 @@ public class BaseActivity extends AppCompatActivity {
 
             functions.saveSetting(this, AppConstant.CURRENT_INTERVENTION, Integer.toString(index));
 
-            if(displayMessage) {
+            // Log
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Interventions")
+                    .setAction("Playing: " + getCurrentInterventionTitle())
+                    .build());
+
+            if (displayMessage) {
                 Toast.makeText(BaseActivity.this, "Selected: " + getCurrentInterventionTitle(), Toast.LENGTH_SHORT).show();
             }
 

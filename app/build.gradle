@@ -28,7 +28,12 @@ dependencies {
 
     compile 'com.github.Triggertrap:SeekArc:v1.1'
 
+    // [START gms_compile]
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    // [END gms_compile]
 }
+
+apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven {

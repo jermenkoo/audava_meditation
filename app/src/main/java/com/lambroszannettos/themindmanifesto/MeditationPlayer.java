@@ -99,7 +99,7 @@ public class MeditationPlayer extends BaseActivity {
                     mediaPlayer.start();
                     playButton.setImageResource(android.R.drawable.ic_media_pause);
                     // updates the current song time
-                    myHandler.postDelayed(UpdateSongTime, 1000);
+                    myHandler.postDelayed(UpdateSongTime, 999);
                 } else if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                     playButton.setImageResource(android.R.drawable.ic_media_play);
@@ -151,13 +151,11 @@ public class MeditationPlayer extends BaseActivity {
             @Override
             public void onStartTrackingTouch(SeekArc seekArc) {
                 isSeekBarTracking = true;
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekArc seekArc) {
                 isSeekBarTracking = false;
-
             }
         });
 

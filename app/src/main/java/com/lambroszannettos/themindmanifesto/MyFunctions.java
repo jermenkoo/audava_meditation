@@ -50,11 +50,9 @@ public final class MyFunctions {
         editor.putString(key, value);
 
         editor.commit();
-
     }
 
     public String readSetting(Context context, String key) {
-
         SharedPreferences sharedPref;
         String result = "";
 
@@ -62,13 +60,13 @@ public final class MyFunctions {
             sharedPref = context.getSharedPreferences("user_settings", Context.MODE_PRIVATE);
             result = sharedPref.getString(key, "");
         } catch (NullPointerException e) {
-            Log.d("Cannot read settings", e.toString());
+            Log.e("Cannot read settings", e.toString());
         }
 
         return result;
     }
 
-    //Given an audio file, this returns the ID3 Title Field
+    // Given an audio file, this returns the ID3 Title Field.
     public String getAudioTitle(Context context, File file, String path) {
         AssetFileDescriptor afd;
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
@@ -85,6 +83,7 @@ public final class MyFunctions {
         return title;
     }
 
+    // Given an audio file, returns the ID3 Album Field.
     public String getAudioAlbum(Context context, File file, String path) {
         AssetFileDescriptor afd;
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();

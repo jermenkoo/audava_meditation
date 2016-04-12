@@ -9,6 +9,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+
 /**
  * Created by Lambros on 26/03/16.
  */
@@ -22,14 +24,15 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.settings_layout, contentFrameLayout);
 
         //Get UI elements
-        final SeekBar skipAmount        = (SeekBar) findViewById(R.id.seekSkipAmount);
+        final SeekBar skipAmount        = (SeekBar)  findViewById(R.id.seekSkipAmount);
         final CheckBox showSplashScreen = (CheckBox) findViewById(R.id.checkboxSplashScreen);
         final TextView txtSkipAmount    = (TextView) findViewById(R.id.txt_skip_amount);
-        Button btnSaveSettings          = (Button) findViewById(R.id.btn_save_settings);
+        Button btnSaveSettings          = (Button)   findViewById(R.id.btn_save_settings);
 
         //Read settings and convert to proper numerical values where appropriate
         String skipSetting         = functions.readSetting(this, AppConstant.SKIP_KEY);
@@ -42,6 +45,11 @@ public class SettingsActivity extends BaseActivity {
         txtSkipAmount.setText(Integer.toString(skipAmount.getProgress()));
         showSplashScreen.setChecked(Boolean.parseBoolean(splashScreenSetting));
 
+        //Log
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Settings")
+                .setAction("Changing Settings")
+                .build());
 
         skipAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
 
         selectIntervention(tempTitle,tempAlbum, false);
 
-        //Depending on the settings, either load Splash Screen or MeditationPlayer screen
+        //Depending on the settings, either load SplashScreen or MeditationPlayer screen
         if (Boolean.parseBoolean(splashScreenSetting)) {
             Intent loadSplash = new Intent(getApplicationContext(), SplashScreen.class);
             startActivity(loadSplash);
