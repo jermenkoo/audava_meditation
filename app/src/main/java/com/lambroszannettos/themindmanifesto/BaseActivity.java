@@ -64,12 +64,10 @@ public class BaseActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        // [START shared_tracker]
         // Obtain the shared Tracker instance.
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
         mTracker.enableAdvertisingIdCollection(true);
-        // [END shared_tracker]
 
         //new instance of class to detect headphones plugged in/out
         myReceiver = new HeadphoneStateReceiver();
@@ -79,108 +77,31 @@ public class BaseActivity extends AppCompatActivity {
 
         try {
             skipSetting = functions.readSetting(this, AppConstant.SKIP_KEY);
-            skipAmount = Integer.parseInt(skipSetting);
+            skipAmount  = Integer.parseInt(skipSetting);
         } catch (RuntimeException e) {
             Log.e("Wrong value entered", e.toString());
-        }
-
-        if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
         }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+                final int currentId = item.getItemId();
 
+                if (currentLayoutId != currentId) {
+                    interventionCategory = AppConstant.categoryToString.get(currentId);
 
-                if (currentLayoutId != item.getItemId()) {
+                    // launch the Intent we wanted
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Class newClass = AppConstant.choiceToScreen.get(currentId);
+                            Intent newIntent = new Intent(getApplicationContext(), newClass);
 
+                            startActivity(newIntent);
+                        }
+                    }, 300);
 
-                    switch (item.getItemId()) {
-
-                        case R.id.menu_home:
-
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
-                                    startActivity(loadPlayer);
-                                }
-                            }, 250);
-                            break;
-
-                        case R.id.menu_browse_all:
-
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent loadBrowseAll = new Intent(getApplicationContext(), ChooseMeditation.class);
-                                    interventionCategory = AppConstant.BROWSE_ALL;
-                                    startActivity(loadBrowseAll);
-                                }
-                            }, 250);
-                            break;
-
-                        case R.id.menu_relationships:
-
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
-                                    interventionCategory = AppConstant.RELATIONSHIPS;
-                                    startActivity(loadRelationships);
-                                }
-                            }, 250);
-                            break;
-
-                        case R.id.menu_health:
-
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent loadWork = new Intent(getApplicationContext(), ChooseMeditation.class);
-                                    interventionCategory = AppConstant.HEALTH;
-                                    startActivity(loadWork);
-                                }
-                            }, 250);
-                            break;
-
-                        case R.id.menu_business:
-
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent loadGoals = new Intent(getApplicationContext(), ChooseMeditation.class);
-                                    interventionCategory = AppConstant.BUSINESS;
-                                    startActivity(loadGoals);
-                                }
-                            }, 250);
-                            break;
-
-                        case R.id.menu_about:
-
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent loadAbout = new Intent(getApplicationContext(), About.class);
-                                    startActivity(loadAbout);
-                                }
-                            }, 250);
-                            break;
-
-                        case R.id.menu_settings:
-
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent loadSettings = new Intent(getApplicationContext(), SettingsActivity.class);
-                                    startActivity(loadSettings);
-                                }
-                            }, 250);
-                            break;
-                    }
-
-                    currentLayoutId = item.getItemId();
+                    currentLayoutId = currentId;
                 }
 
                 drawerLayout.closeDrawers();
@@ -233,7 +154,6 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void selectIntervention(String title, String album, Boolean displayMessage) {
-
         AssetFileDescriptor afd;
         int index = 0;
         for (File f : allAudioFiles) {
@@ -267,14 +187,13 @@ public class BaseActivity extends AppCompatActivity {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("Can't open file", e.toString());
         }
     }
 
     public String getCurrentInterventionTitle() {
-        String title;
         int index = Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION));
-        title = functions.getAudioTitle(this, allAudioFiles.get(index), AppConstant.INTERVENTION_FOLDER);
+        String title = functions.getAudioTitle(this, allAudioFiles.get(index), AppConstant.INTERVENTION_FOLDER);
 
         return title;
     }

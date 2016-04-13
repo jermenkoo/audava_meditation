@@ -1,12 +1,8 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.os.Bundle;
-import android.text.Html;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Lambros on 21/03/16.

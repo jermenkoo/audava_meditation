@@ -33,6 +33,7 @@ public class MediaPlayerSingleton {
                 }
             }
         }
+
         return instance;
     }
 }

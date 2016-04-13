@@ -63,9 +63,9 @@ public class ChooseMeditation extends BaseActivity {
         // Adapter for converting file items into View items to populate the ListView
         SimpleAdapter adapter = new SimpleAdapter(this, itemsList,
                 android.R.layout.simple_list_item_2,
-                new String[]{"title", "album"},
-                new int[]{android.R.id.text1,
-                        android.R.id.text2});
+                new String[] {"title", "album"},
+                new int[] {android.R.id.text1, android.R.id.text2}
+        );
         interventionList.setAdapter(adapter);
 
         // Actions when item is selected
