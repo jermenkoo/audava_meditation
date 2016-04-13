@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -90,51 +91,92 @@ public class BaseActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+
+
                 if (currentLayoutId != item.getItemId()) {
+
+
                     switch (item.getItemId()) {
 
                         case R.id.menu_home:
 
-                            Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
-                            startActivity(loadPlayer);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent loadPlayer = new Intent(getApplicationContext(), MeditationPlayer.class);
+                                    startActivity(loadPlayer);
+                                }
+                            }, 250);
                             break;
 
                         case R.id.menu_browse_all:
 
-                            Intent loadBrowseAll = new Intent(getApplicationContext(), ChooseMeditation.class);
-                            interventionCategory = AppConstant.BROWSE_ALL;
-                            startActivity(loadBrowseAll);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent loadBrowseAll = new Intent(getApplicationContext(), ChooseMeditation.class);
+                                    interventionCategory = AppConstant.BROWSE_ALL;
+                                    startActivity(loadBrowseAll);
+                                }
+                            }, 250);
                             break;
 
                         case R.id.menu_relationships:
 
-                            Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
-                            interventionCategory = AppConstant.RELATIONSHIPS;
-                            startActivity(loadRelationships);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent loadRelationships = new Intent(getApplicationContext(), ChooseMeditation.class);
+                                    interventionCategory = AppConstant.RELATIONSHIPS;
+                                    startActivity(loadRelationships);
+                                }
+                            }, 250);
                             break;
 
                         case R.id.menu_health:
 
-                            Intent loadWork = new Intent(getApplicationContext(), ChooseMeditation.class);
-                            interventionCategory = AppConstant.HEALTH;
-                            startActivity(loadWork);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent loadWork = new Intent(getApplicationContext(), ChooseMeditation.class);
+                                    interventionCategory = AppConstant.HEALTH;
+                                    startActivity(loadWork);
+                                }
+                            }, 250);
                             break;
 
                         case R.id.menu_business:
 
-                            Intent loadGoals = new Intent(getApplicationContext(), ChooseMeditation.class);
-                            interventionCategory = AppConstant.BUSINESS;
-                            startActivity(loadGoals);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent loadGoals = new Intent(getApplicationContext(), ChooseMeditation.class);
+                                    interventionCategory = AppConstant.BUSINESS;
+                                    startActivity(loadGoals);
+                                }
+                            }, 250);
                             break;
 
                         case R.id.menu_about:
-                            Intent loadAbout = new Intent(getApplicationContext(), About.class);
-                            startActivity(loadAbout);
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent loadAbout = new Intent(getApplicationContext(), About.class);
+                                    startActivity(loadAbout);
+                                }
+                            }, 250);
                             break;
 
                         case R.id.menu_settings:
-                            Intent loadSettings = new Intent(getApplicationContext(), SettingsActivity.class);
-                            startActivity(loadSettings);
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent loadSettings = new Intent(getApplicationContext(), SettingsActivity.class);
+                                    startActivity(loadSettings);
+                                }
+                            }, 250);
                             break;
                     }
 
@@ -190,15 +232,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public void selectIntervention (String title, String album, Boolean displayMessage) {
+    public void selectIntervention(String title, String album, Boolean displayMessage) {
 
         AssetFileDescriptor afd;
         int index = 0;
-        for (File f: allAudioFiles) {
+        for (File f : allAudioFiles) {
             String tempAlbum = functions.getAudioAlbum(this, f, AppConstant.INTERVENTION_FOLDER);
             String tempTitle = functions.getAudioTitle(this, f, AppConstant.INTERVENTION_FOLDER);
 
-            if(tempAlbum.equals(album) && tempTitle.equals(title)) {
+            if (tempAlbum.equals(album) && tempTitle.equals(title)) {
                 break;
             } else {
                 index++;
@@ -229,7 +271,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public String getCurrentInterventionTitle () {
+    public String getCurrentInterventionTitle() {
         String title;
         int index = Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION));
         title = functions.getAudioTitle(this, allAudioFiles.get(index), AppConstant.INTERVENTION_FOLDER);
