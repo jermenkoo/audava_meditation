@@ -79,7 +79,7 @@ public class MeditationPlayer extends BaseActivity {
                 myHandler.postDelayed(this, 999);
 
                 //For headphone message, create unique Runnable for it later
-                if (AppConstant.HEADSET_ON == false) {
+                if (!AppConstant.HEADSET_ON) {
                     txtHeadphoneMessage.setText("For the best experience,\nplease plug your headset in.");
                 } else {
                     txtHeadphoneMessage.setText("");

@@ -31,16 +31,12 @@ public class MainActivity extends BaseActivity {
             lastIntervention = functions.readSetting(this, AppConstant.CURRENT_INTERVENTION);
         }
 
-        if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
-        }
-
         String tempAlbum = functions.getAudioAlbum(this, allAudioFiles.get(Integer.parseInt(lastIntervention)), AppConstant.INTERVENTION_FOLDER);
         String tempTitle = functions.getAudioTitle(this, allAudioFiles.get(Integer.parseInt(lastIntervention)), AppConstant.INTERVENTION_FOLDER);
 
-        selectIntervention(tempTitle,tempAlbum, false);
+        selectIntervention(tempTitle, tempAlbum, false);
 
-        //Depending on the settings, either load SplashScreen or MeditationPlayer screen
+        // Depending on the settings, either load SplashScreen or MeditationPlayer screen
         if (Boolean.parseBoolean(splashScreenSetting)) {
             Intent loadSplash = new Intent(getApplicationContext(), SplashScreen.class);
             startActivity(loadSplash);
