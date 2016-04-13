@@ -13,6 +13,7 @@ public class HeadphoneStateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
             int state = intent.getIntExtra("state", -1);
+
             switch (state) {
                 case 0:  // headphones plugged out
                     AppConstant.HEADSET_ON = false;
