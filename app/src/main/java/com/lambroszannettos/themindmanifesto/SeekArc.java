@@ -24,12 +24,12 @@
 package com.lambroszannettos.themindmanifesto;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -45,10 +45,11 @@ import android.view.View;
  * @author Neil Davies
  * 
  */
+
 public class SeekArc extends View {
 
 	private static final String TAG = SeekArc.class.getSimpleName();
-	private static int INVALID_PROGRESS_VALUE = -1;
+	private static final int INVALID_PROGRESS_VALUE = -1;
 	// The initial rotational offset -90 means we start at 12 o'clock
 	private final int mAngleOffset = -90;
 
@@ -139,7 +140,7 @@ public class SeekArc extends View {
 		 * @param progress
 		 *            The current progress level. This will be in the range
 		 *            0..max where max was set by
-		 *            {@link ProgressArc#setMax(int)}. (The default value for
+		 *            {@link SeekArc#setMax(int)}. (The default value for
 		 *            max is 100.)
 		 * @param fromUser
 		 *            True if the progress change was initiated by the user.
@@ -183,15 +184,16 @@ public class SeekArc extends View {
 	private void init(Context context, AttributeSet attrs, int defStyle) {
 
 		Log.d(TAG, "Initialising SeekArc");
-		final Resources res = getResources();
 		float density = context.getResources().getDisplayMetrics().density;
 
 		// Defaults, may need to link this into theme settings
-		int arcColor = res.getColor(R.color.progress_gray);
-		int progressColor = res.getColor(R.color.default_blue_light);
+		// int arcColor = res.getColor(R.color.progress_gray);
+        int arcColor        = ContextCompat.getColor(context, R.color.progress_gray);
+		int progressColor   = ContextCompat.getColor(context, R.color.default_blue_light);
 		int thumbHalfheight = 0;
-		int thumbHalfWidth = 0;
-		mThumb = res.getDrawable(R.drawable.seek_arc_control_selector);
+		int thumbHalfWidth  = 0;
+
+        mThumb = ContextCompat.getDrawable(context, R.drawable.seek_arc_control_selector);
 		// Convert progress width to pixels for current density
 		mProgressWidth = (int) (mProgressWidth * density);
 
@@ -519,7 +521,8 @@ public class SeekArc extends View {
 	
 	public void setRoundedEdges(boolean isEnabled) {
 		mRoundedEdges = isEnabled;
-		if (mRoundedEdges) {
+
+        if (mRoundedEdges) {
 			mArcPaint.setStrokeCap(Paint.Cap.ROUND);
 			mProgressPaint.setStrokeCap(Paint.Cap.ROUND);
 		} else {
@@ -530,7 +533,8 @@ public class SeekArc extends View {
 	
 	public void setTouchInSide(boolean isEnabled) {
 		int thumbHalfheight = mThumb.getIntrinsicHeight() / 2;
-		int thumbHalfWidth = mThumb.getIntrinsicWidth() / 2;
+		int thumbHalfWidth  = mThumb.getIntrinsicWidth() / 2;
+
 		mTouchInside = isEnabled;
 		if (mTouchInside) {
 			mTouchIgnoreRadius = (float) mArcRadius / 4;
