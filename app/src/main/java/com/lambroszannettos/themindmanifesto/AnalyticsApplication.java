@@ -21,6 +21,14 @@ import android.app.Application;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
+/**
+ *
+ * Class responsible for creating a shared Tracker object
+ * for Google Analytics tracking. It creates an instance
+ * of the Tracker object and loads the settings automatically.
+ *
+ */
+
 public class AnalyticsApplication extends Application {
     private Tracker mTracker;
 

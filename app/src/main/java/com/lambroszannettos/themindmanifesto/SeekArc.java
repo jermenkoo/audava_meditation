@@ -43,7 +43,11 @@ import android.view.View;
  * follows a circle path instead of a straight line.
  * 
  * @author Neil Davies
- * 
+ *
+ * This class has been edited by Jaromir Latal in order to
+ * conform to the newest API standards - the original version
+ * used already deprecated methods.
+ *
  */
 
 public class SeekArc extends View {
