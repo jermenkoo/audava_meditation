@@ -25,28 +25,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class BaseActivity extends AppCompatActivity {
 
-    MyFunctions functions = MyFunctions.getUniqueInstance();
+    private MyFunctions functions = MyFunctions.getUniqueInstance();
 
-    //For drawer menu functionality
+    // For drawer menu functionality
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
 
-    //For headphone detection
+    // For headphone detection
     private HeadphoneStateReceiver myReceiver;
 
-    static int currentLayoutId;
+    // For media player
+    protected static MediaPlayer mediaPlayer = MediaPlayerSingleton.getInstance().mediaPlayer;
+    private String skipSetting;
+    protected int skipAmount;
 
-    //For media player
-    static MediaPlayer mediaPlayer = MediaPlayerSingleton.getInstance().mediaPlayer;
-    String skipSetting;
-    int skipAmount;
-
-    static String interventionCategory;
-
-    public ArrayList<File> allAudioFiles;
+    // General
+    private static int currentLayoutId;
+    protected static String interventionCategory;
+    protected static ArrayList<File> allAudioFiles;
 
     // Tracking
     protected Tracker mTracker;
@@ -131,6 +131,24 @@ public class BaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
+
+    /**
+     *
+     * Takes as parameters the subfolder of assets in which to look for audio files,
+     * and also the extension (i.e. the type) of audio files to look for.
+     *
+     * For example calling it with these parameters:
+     *
+     * getAllFilesInAssetByExtension(this, "someFolder", ".mp3")
+     *
+     * would return an ArrayList of Mp3s in the folder "someFolder" in the "assets"
+     * folder of the app.
+     *
+     * @param context
+     * @param subFolder
+     * @param extension
+     * @return
+     */
     public ArrayList<File> getAllFilesInAssetByExtension(Context context, String subFolder, String extension) {
         Assert.assertNotNull(context);
 
@@ -153,6 +171,17 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    /**
+     *
+     * Takes the required intervention title and album/category strings and
+     * looks through the file list for matching audio files. If one is found
+     * it is assigned to the mediaPlayer object and the global CURRENT_INTERVENTION
+     * variable is changed to reflect this new selected intervention.
+     *
+     * @param title
+     * @param album
+     * @param displayMessage
+     */
     public void selectIntervention(String title, String album, Boolean displayMessage) {
         AssetFileDescriptor afd;
         int index = 0;
@@ -191,6 +220,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     *
+     * Returns the title string of the currently selected intervention.
+     *
+     * @return
+     */
     public String getCurrentInterventionTitle() {
         int index = Integer.parseInt(functions.readSetting(this, AppConstant.CURRENT_INTERVENTION));
         String title = functions.getAudioTitle(this, allAudioFiles.get(index), AppConstant.INTERVENTION_FOLDER);

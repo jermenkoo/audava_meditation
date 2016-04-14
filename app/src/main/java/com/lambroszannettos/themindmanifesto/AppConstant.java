@@ -3,7 +3,8 @@ package com.lambroszannettos.themindmanifesto;
 /*
  * Created by lambros on 08/03/16.
  *
- * Just a class to store constants
+ * Just a class to store constants and variables that
+ * need to be accessible globally.
  *
  */
 
@@ -11,14 +12,14 @@ import java.util.HashMap;
 
 public class AppConstant {
 
-    //Constants for songs
+    //Constants for interventions
     public static final int SAFE_ENDING         = 1000;
     public static final int MAX_SKIP_AMOUNT     = 60;
     public static final int DEFAULT_SKIP_AMOUNT = 15000;
 
     public static final boolean DEFAULT_SPLASH_SCREEN_SETTING = true;
-
     public static final String INTERVENTION_FOLDER = "interventions";
+    public static final int SPLASH_SCREEN_MS = 3000;
 
     //Keywords for filtering interventions based on selection
     public static final String BROWSE_ALL       = "All";
@@ -41,6 +42,7 @@ public class AppConstant {
         put(R.id.menu_about,         About.class);
         put(R.id.menu_settings,      SettingsActivity.class);
     }};
+
 
     // InterventionCategory
     public static final HashMap<Integer, String> categoryToString = new HashMap<Integer, String>() {{

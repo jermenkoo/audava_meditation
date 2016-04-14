@@ -6,7 +6,14 @@ import android.widget.FrameLayout;
 
 /**
  * Created by Lambros on 21/03/16.
+ *
+ * A simple class that loads a WebView element with the html file
+ * containing the text for the about screen. The html file is
+ * "about_us.html" and the images associated with it are contained
+ * within the same folder, namely the "assets" folder of the app.
+ *
  */
+
 public class About extends BaseActivity {
 
     @Override
