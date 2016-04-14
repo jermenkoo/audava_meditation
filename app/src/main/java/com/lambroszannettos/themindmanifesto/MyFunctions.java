@@ -12,19 +12,25 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Lambros on 08/03/16.
- * <p/>
+ *
  * Functions in this class will be accessible from all other
  * activities, by typing MyFunctions.theFunctionName([...])
  */
 public final class MyFunctions {
 
-    private static MyFunctions uniqueInstance = new MyFunctions();
+    private static volatile MyFunctions uniqueInstance = null;
 
     private MyFunctions() {
     }
 
-    //Function to return time formatted in "mins, seconds" format,
-    //given milliseconds
+    /**
+     *
+     * Function to return time formatted in "mins, seconds" format,
+     * given milliseconds.
+     *
+     * @param milliseconds
+     * @return
+     */
     public static String returnTimeString(double milliseconds) {
 
         long minutes = TimeUnit.MILLISECONDS.toMinutes((long) milliseconds);
@@ -43,6 +49,15 @@ public final class MyFunctions {
     }
 
 
+    /**
+     *
+     * Saves a setting in SharedPreferences under the key passed
+     * to it.
+     *
+     * @param context
+     * @param key
+     * @param value
+     */
     public void saveSetting(Context context, String key, String value) {
         SharedPreferences sharedPref = context.getSharedPreferences("user_settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -52,6 +67,15 @@ public final class MyFunctions {
         editor.commit();
     }
 
+    /**
+     *
+     * Returns the string value of a setting that was saved in SharedPreferences,
+     * based on the key passed to it.
+     *
+     * @param context
+     * @param key
+     * @return
+     */
     public String readSetting(Context context, String key) {
         SharedPreferences sharedPref;
         String result = "";
@@ -66,7 +90,15 @@ public final class MyFunctions {
         return result;
     }
 
-    // Given an audio file, this returns the ID3 Title Field.
+    /**
+     *
+     * Given an audio file, this returns the ID3 Title Field.
+     *
+     * @param context
+     * @param file
+     * @param path
+     * @return
+     */
     public String getAudioTitle(Context context, File file, String path) {
         AssetFileDescriptor afd;
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
@@ -83,7 +115,15 @@ public final class MyFunctions {
         return title;
     }
 
-    // Given an audio file, returns the ID3 Album Field.
+    /**
+     *
+     * Given an audio file, returns the ID3 Album Field.
+     *
+     * @param context
+     * @param file
+     * @param path
+     * @return
+     */
     public String getAudioAlbum(Context context, File file, String path) {
         AssetFileDescriptor afd;
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
@@ -100,7 +140,21 @@ public final class MyFunctions {
         return album;
     }
 
+    /**
+     *
+     * Returns unique instance of the MyFunctions class.
+     *
+     * @return
+     */
     public static MyFunctions getUniqueInstance() {
+
+        if (uniqueInstance == null) {
+            synchronized (MediaPlayerSingleton.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new MyFunctions();
+                }
+            }
+        }
         return uniqueInstance;
     }
 
