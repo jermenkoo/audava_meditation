@@ -39,12 +39,12 @@ public class ChooseMeditation extends BaseActivity {
         // for audio files
         final ArrayList<HashMap<String, String>> itemsList = new ArrayList<>();
 
-        title.setText("Browsing: " + interventionCategory);
+        title.setText("Browsing: " + currentLayoutString);
 
         // LOG
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Interventions")
-                .setAction("Browsing: " + interventionCategory)
+                .setAction("Browsing: " + currentLayoutString)
                 .build());
 
         // Add those files to the ListView
@@ -52,7 +52,7 @@ public class ChooseMeditation extends BaseActivity {
             String title = functions.getAudioTitle(this, f, AppConstant.INTERVENTION_FOLDER);
             String album = functions.getAudioAlbum(this, f, AppConstant.INTERVENTION_FOLDER);
 
-            if (album.equals(interventionCategory) || interventionCategory.equals(AppConstant.BROWSE_ALL)) {
+            if (album.equals(currentLayoutString) || currentLayoutString.equals(AppConstant.BROWSE_ALL)) {
                 HashMap<String, String> itemsMap = new HashMap<>(2);
                 itemsMap.put("title", title);
                 itemsMap.put("album", album);

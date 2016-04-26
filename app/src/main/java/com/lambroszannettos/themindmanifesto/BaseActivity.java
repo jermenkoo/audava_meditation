@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
@@ -45,7 +46,7 @@ public class BaseActivity extends AppCompatActivity {
 
     // General
     private static int currentLayoutId;
-    protected static String interventionCategory;
+    protected static String currentLayoutString;
     protected static ArrayList<File> allAudioFiles;
 
     // Tracking
@@ -59,7 +60,11 @@ public class BaseActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
@@ -88,7 +93,7 @@ public class BaseActivity extends AppCompatActivity {
                 final int currentId = item.getItemId();
 
                 if (currentLayoutId != currentId) {
-                    interventionCategory = AppConstant.categoryToString.get(currentId);
+                    currentLayoutString = AppConstant.categoryToString.get(currentId);
 
                     // launch the Intent we wanted
                     new Handler().postDelayed(new Runnable() {
@@ -108,6 +113,11 @@ public class BaseActivity extends AppCompatActivity {
                 return false;
             }
         });
+        //Change the toolbar title to reflect new layout
+        TextView t = (TextView) findViewById(R.id.toolbar_title);
+        t.setText(currentLayoutString);
+
+
     }
 
     @Override

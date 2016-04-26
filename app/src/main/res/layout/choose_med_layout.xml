@@ -7,13 +7,14 @@
         android:id="@+id/txt_choose_med_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="left"
         android:padding="20dp"
         android:text="Browsing:" />
 
     <ListView
         android:id="@+id/med_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"></ListView>
 
 </LinearLayout>
