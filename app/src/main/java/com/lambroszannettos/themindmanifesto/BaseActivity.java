@@ -117,7 +117,6 @@ public class BaseActivity extends AppCompatActivity {
         TextView t = (TextView) findViewById(R.id.toolbar_title);
         t.setText(currentLayoutString);
 
-
     }
 
     @Override

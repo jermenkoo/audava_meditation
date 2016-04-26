@@ -48,6 +48,7 @@
 
         <item
             android:id="@+id/menu_about"
+            android:icon="@drawable/ic_logo"
             android:title="@string/str_about"></item>
 
     </group>
